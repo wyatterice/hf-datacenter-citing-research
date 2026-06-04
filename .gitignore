@@ -1,0 +1,12 @@
+# Large geospatial data files
+Land/Annual_NLCD_LndCov_2024_CU_C1V1/
+Land/tl_2025_us_county/
+*.tif
+*.img
+*.shp
+*.dbf
+*.shx
+*.cpg
+*.prj
+*.xml
+*.aux.xml
