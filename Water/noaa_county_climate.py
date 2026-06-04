@@ -6,9 +6,6 @@ import time
 with open("noaa_counties.txt", "r") as f:
     county_raw = f.read()
 
-with open("noaa_counties.txt", "r") as f:
-    county_raw = f.read()
-
 # Parse the county list into IDs and names
 county_lines = county_raw.strip().split("\n")
 counties = []
