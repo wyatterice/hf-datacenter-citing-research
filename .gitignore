@@ -1,6 +1,8 @@
 # Large geospatial data files
 Land/Annual_NLCD_LndCov_2024_CU_C1V1/
 Land/tl_2025_us_county/
+__pycache__/
+*.pyc
 *.tif
 *.img
 *.shp
@@ -10,3 +12,5 @@ Land/tl_2025_us_county/
 *.prj
 *.xml
 *.aux.xml
+*.gdb
+PADUS4_1Geodatabase/
