@@ -1,0 +1,106 @@
+company,city,county,state,state_abbr,fips,status,online_year
+Meta,Huntsville,Madison,Alabama,AL,,online,2021
+Meta,Montgomery,Montgomery,Alabama,AL,,under construction,
+Meta,Mesa,Maricopa,Arizona,AZ,,online,2025
+Meta,Stanton Springs,Newton,Georgia,GA,,online,2020
+Meta,Kuna,Ada,Idaho,ID,,under construction,
+Meta,DeKalb,DeKalb,Illinois,IL,,online,2023
+Meta,Jeffersonville,Clark,Indiana,IN,,under construction,
+Meta,Lebanon,Boone,Indiana,IN,,under construction,
+Meta,Altoona,Polk,Iowa,IA,,online,2014
+Meta,Holly Ridge,Richland Parish,Louisiana,LA,,under construction,
+Meta,Rosemount,Dakota,Minnesota,MN,,under construction,
+Meta,Kansas City,Platte,Missouri,MO,,online,2025
+Meta,Springfield,Sarpy,Nebraska,NE,,online,2019
+Meta,Los Lunas,Valencia,New Mexico,NM,,online,2019
+Meta,Forest City,Rutherford,North Carolina,NC,,online,2012
+Meta,Bowling Green,Wood,Ohio,OH,,under construction,
+Meta,New Albany,Franklin,Ohio,OH,,under construction,
+Meta,Tulsa,Tulsa,Oklahoma,OK,,under construction,
+Meta,Prineville,Crook,Oregon,OR,,online,2011
+Meta,Aiken,Aiken,South Carolina,SC,,under construction,
+Meta,Gallatin,Sumner,Tennessee,TN,,online,2024
+Meta,El Paso,El Paso,Texas,TX,,under construction,
+Meta,Fort Worth,Tarrant,Texas,TX,,online,2017
+Meta,Temple,Bell,Texas,TX,,under construction,
+Meta,Eagle Mountain,Utah,Utah,UT,,online,2021
+Meta,Henrico,Henrico,Virginia,VA,,online,2020
+Meta,Beaver Dam,Dodge,Wisconsin,WI,,under construction,
+Meta,Cheyenne,Laramie,Wyoming,WY,,under construction,
+Apple,Newton,Catawba,North Carolina,NC,,under construction,
+Apple,Mesa,Maricopa,Arizona,AZ,,online,2017
+Apple,Newark,Alameda,California,CA,,online,2006
+Apple,Prineville,Crook,Oregon,OR,,online,2023
+Apple,Waukee,Dallas,Iowa,IA,,online,2024
+Apple,Reno,Washoe,Nevada,NV,,online,2012
+Amazon,Ashburn,Loudoun,Virginia,VA,,online,2006
+Amazon,Manassas,Prince William,Virginia,VA,,online,2011
+Amazon,Mudd Tavern,Spotsylvania,Virginia,VA,,under construction,
+Amazon,Boardman,Morrow,Oregon,OR,,online,2011
+Amazon,Hermiston,Umatilla,Oregon,OR,,online,2017
+Amazon,Arlington,Gilliam,Oregon,OR,,under construction,
+Amazon,Hilliard,Franklin,Ohio,OH,,online,2016
+Amazon,New Albany,Licking,Ohio,OH,,online,2016
+Amazon,Sunbury,Delaware,Ohio,OH,,under construction,
+Amazon,Gilroy,Santa Clara,California,CA,,under construction,
+Amazon,New Carlisle,St. Joseph,Indiana,IN,,online,2025
+Amazon,Canton,Madison,Mississippi,MS,,under construction,
+Amazon,Vicksburg,Warren,Mississippi,MS,,under construction,
+Amazon,Jackson,Hinds,Mississippi,MS,,under construction,
+Amazon,Salem Township,Luzerne,Pennsylvania,PA,,under construction,
+Amazon,Covington,Newton,Georgia,GA,,under construction,
+Amazon,New Florence,Montgomery,Missouri,MO,,under construction,
+Amazon,Owings Mills,Baltimore,Maryland,MD,,under construction,
+Amazon,Phoenix,Maricopa,Arizona,AZ,,under construction,
+Microsoft,West Des Moines,Polk,Iowa,IA,,online,2014
+Microsoft,Leesburg,Loudoun,Virginia,VA,,online,2012
+Microsoft,Gainesville,Prince William,Virginia,VA,,under construction,
+Microsoft,Boydton,Mecklenburg,Virginia,VA,,online,2014
+Microsoft,East Point,Fulton,Georgia,GA,,under construction,
+Microsoft,Douglasville,Douglas,Georgia,GA,,under construction,
+Microsoft,Northlake,Cook,Illinois,IL,,online,2009
+Microsoft,San Antonio,Bexar,Texas,TX,,online,2008
+Microsoft,Castroville,Medina,Texas,TX,,under construction,
+Microsoft,Cheyenne,Laramie,Wyoming,WY,,online,2016
+Microsoft,San Jose,Santa Clara,California,CA,,under construction,
+Microsoft,Fresno,Fresno,California,CA,,online,2012
+Microsoft,Quincy,Grant,Washington,WA,,online,2007
+Microsoft,El Mirage,Maricopa,Arizona,AZ,,online,2021
+Google,The Dalles,Wasco,Oregon,OR,,online,2006
+Google,Sparks,Storey,Nevada,NV,,online,2021
+Google,Henderson,Clark,Nevada,NV,,online,2020
+Google,Mesa,Maricopa,Arizona,AZ,,under construction,
+Google,Pampa,Gray,Texas,TX,,under construction,
+Google,Claude,Armstrong,Texas,TX,,under construction,
+Google,Vernon,Wilbarger,Texas,TX,,under construction,
+Google,Haskell,Haskell,Texas,TX,,under construction,
+Google,Midlothian,Ellis,Texas,TX,,online,2019
+Google,Mayes,Mayes,Oklahoma,OK,,online,2007
+Google,Muskogee,Muskogee,Oklahoma,OK,,under construction,
+Google,Stillwater,Payne,Oklahoma,OK,,under construction,
+Google,Kansas City,Jackson,Missouri,MO,,under construction,
+Google,Lincoln,Lancaster,Nebraska,NE,,under construction,
+Google,Papillion,Sarpy,Nebraska,NE,,online,2019
+Google,Omaha,Douglas,Nebraska,NE,,online,2024
+Google,Council Bluffs,Pottawattamie,Iowa,IA,,online,2007
+Google,Hermantown,St. Louis,Minnesota,MN,,under construction,
+Google,Pine Island,Goodhue,Minnesota,MN,,under construction,
+Google,Cedar Rapids,Linn,Iowa,IA,,under construction,
+Google,New Florence,Montgomery,Missouri,MO,,under construction,
+Google,West Memphis,Crittenden,Arkansas,AR,,under construction,
+Google,Michigan City,LaPorte,Indiana,IN,,under construction,
+Google,Fort Wayne,Allen,Indiana,IN,,online,2025
+Google,Clarksville,Montgomery,Tennessee,TN,,online,2018
+Google,Bridgeport,Jackson,Alabama,AL,,online,2019
+Google,Lithia Springs,Douglas,Georgia,GA,,online,2003
+Google,LaGrange,Troup,Georgia,GA,,under construction,
+Google,Lenoir,Caldwell,North Carolina,NC,,online,2007
+Google,New Albany,Licking,Ohio,OH,,online,2020
+Google,Lancaster,Fairfield,Ohio,OH,,online,2024
+Google,Columbus,Franklin,Ohio,OH,,under construction,
+Google,Dorchester,Dorchester,South Carolina,SC,,under construction,
+Google,Moncks Corner,Berkeley,South Carolina,SC,,online,2008
+Google,Ridgeville,Dorchester,South Carolina,SC,,under construction,
+Google,Chesterfield,Chesterfield,Virginia,VA,,under construction,
+Google,Leesburg,Loudoun,Virginia,VA,,online,2019
+Google,Manassas,Prince William,Virginia,VA,,online,2023

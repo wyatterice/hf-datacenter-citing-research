@@ -1,0 +1,106 @@
+company,city,county,state,state_abbr,fips,status,online_year
+Meta,Huntsville,Madison,Alabama,AL,01089,online,2021.0
+Meta,Montgomery,Montgomery,Alabama,AL,01101,under construction,
+Meta,Mesa,Maricopa,Arizona,AZ,04013,online,2025.0
+Meta,Stanton Springs,Newton,Georgia,GA,13217,online,2020.0
+Meta,Kuna,Ada,Idaho,ID,16001,under construction,
+Meta,DeKalb,DeKalb,Illinois,IL,17037,online,2023.0
+Meta,Jeffersonville,Clark,Indiana,IN,18019,under construction,
+Meta,Lebanon,Boone,Indiana,IN,18011,under construction,
+Meta,Altoona,Polk,Iowa,IA,19153,online,2014.0
+Meta,Holly Ridge,Richland Parish,Louisiana,LA,22083,under construction,
+Meta,Rosemount,Dakota,Minnesota,MN,27037,under construction,
+Meta,Kansas City,Platte,Missouri,MO,29165,online,2025.0
+Meta,Springfield,Sarpy,Nebraska,NE,31153,online,2019.0
+Meta,Los Lunas,Valencia,New Mexico,NM,35061,online,2019.0
+Meta,Forest City,Rutherford,North Carolina,NC,37161,online,2012.0
+Meta,Bowling Green,Wood,Ohio,OH,39173,under construction,
+Meta,New Albany,Franklin,Ohio,OH,39049,under construction,
+Meta,Tulsa,Tulsa,Oklahoma,OK,40143,under construction,
+Meta,Prineville,Crook,Oregon,OR,41013,online,2011.0
+Meta,Aiken,Aiken,South Carolina,SC,45003,under construction,
+Meta,Gallatin,Sumner,Tennessee,TN,47165,online,2024.0
+Meta,El Paso,El Paso,Texas,TX,48141,under construction,
+Meta,Fort Worth,Tarrant,Texas,TX,48439,online,2017.0
+Meta,Temple,Bell,Texas,TX,48027,under construction,
+Meta,Eagle Mountain,Utah,Utah,UT,49049,online,2021.0
+Meta,Henrico,Henrico,Virginia,VA,51087,online,2020.0
+Meta,Beaver Dam,Dodge,Wisconsin,WI,55027,under construction,
+Meta,Cheyenne,Laramie,Wyoming,WY,56021,under construction,
+Apple,Newton,Catawba,North Carolina,NC,37035,under construction,
+Apple,Mesa,Maricopa,Arizona,AZ,04013,online,2017.0
+Apple,Newark,Alameda,California,CA,06001,online,2006.0
+Apple,Prineville,Crook,Oregon,OR,41013,online,2023.0
+Apple,Waukee,Dallas,Iowa,IA,19049,online,2024.0
+Apple,Reno,Washoe,Nevada,NV,32031,online,2012.0
+Amazon,Ashburn,Loudoun,Virginia,VA,51107,online,2006.0
+Amazon,Manassas,Prince William,Virginia,VA,51153,online,2011.0
+Amazon,Mudd Tavern,Spotsylvania,Virginia,VA,51177,under construction,
+Amazon,Boardman,Morrow,Oregon,OR,41049,online,2011.0
+Amazon,Hermiston,Umatilla,Oregon,OR,41059,online,2017.0
+Amazon,Arlington,Gilliam,Oregon,OR,41021,under construction,
+Amazon,Hilliard,Franklin,Ohio,OH,39049,online,2016.0
+Amazon,New Albany,Licking,Ohio,OH,39089,online,2016.0
+Amazon,Sunbury,Delaware,Ohio,OH,39041,under construction,
+Amazon,Gilroy,Santa Clara,California,CA,06085,under construction,
+Amazon,New Carlisle,St. Joseph,Indiana,IN,18141,online,2025.0
+Amazon,Canton,Madison,Mississippi,MS,28089,under construction,
+Amazon,Vicksburg,Warren,Mississippi,MS,28149,under construction,
+Amazon,Jackson,Hinds,Mississippi,MS,28049,under construction,
+Amazon,Salem Township,Luzerne,Pennsylvania,PA,42079,under construction,
+Amazon,Covington,Newton,Georgia,GA,13217,under construction,
+Amazon,New Florence,Montgomery,Missouri,MO,29139,under construction,
+Amazon,Owings Mills,Baltimore,Maryland,MD,24510,under construction,
+Amazon,Phoenix,Maricopa,Arizona,AZ,04013,under construction,
+Microsoft,West Des Moines,Polk,Iowa,IA,19153,online,2014.0
+Microsoft,Leesburg,Loudoun,Virginia,VA,51107,online,2012.0
+Microsoft,Gainesville,Prince William,Virginia,VA,51153,under construction,
+Microsoft,Boydton,Mecklenburg,Virginia,VA,51117,online,2014.0
+Microsoft,East Point,Fulton,Georgia,GA,13121,under construction,
+Microsoft,Douglasville,Douglas,Georgia,GA,13097,under construction,
+Microsoft,Northlake,Cook,Illinois,IL,17031,online,2009.0
+Microsoft,San Antonio,Bexar,Texas,TX,48029,online,2008.0
+Microsoft,Castroville,Medina,Texas,TX,48325,under construction,
+Microsoft,Cheyenne,Laramie,Wyoming,WY,56021,online,2016.0
+Microsoft,San Jose,Santa Clara,California,CA,06085,under construction,
+Microsoft,Fresno,Fresno,California,CA,06019,online,2012.0
+Microsoft,Quincy,Grant,Washington,WA,53025,online,2007.0
+Microsoft,El Mirage,Maricopa,Arizona,AZ,04013,online,2021.0
+Google,The Dalles,Wasco,Oregon,OR,41065,online,2006.0
+Google,Sparks,Storey,Nevada,NV,32029,online,2021.0
+Google,Henderson,Clark,Nevada,NV,32003,online,2020.0
+Google,Mesa,Maricopa,Arizona,AZ,04013,under construction,
+Google,Pampa,Gray,Texas,TX,48179,under construction,
+Google,Claude,Armstrong,Texas,TX,48011,under construction,
+Google,Vernon,Wilbarger,Texas,TX,48487,under construction,
+Google,Haskell,Haskell,Texas,TX,48207,under construction,
+Google,Midlothian,Ellis,Texas,TX,48139,online,2019.0
+Google,Mayes,Mayes,Oklahoma,OK,40097,online,2007.0
+Google,Muskogee,Muskogee,Oklahoma,OK,40101,under construction,
+Google,Stillwater,Payne,Oklahoma,OK,40119,under construction,
+Google,Kansas City,Jackson,Missouri,MO,29095,under construction,
+Google,Lincoln,Lancaster,Nebraska,NE,31109,under construction,
+Google,Papillion,Sarpy,Nebraska,NE,31153,online,2019.0
+Google,Omaha,Douglas,Nebraska,NE,31055,online,2024.0
+Google,Council Bluffs,Pottawattamie,Iowa,IA,19155,online,2007.0
+Google,Hermantown,St. Louis,Minnesota,MN,27137,under construction,
+Google,Pine Island,Goodhue,Minnesota,MN,27049,under construction,
+Google,Cedar Rapids,Linn,Iowa,IA,19113,under construction,
+Google,New Florence,Montgomery,Missouri,MO,29139,under construction,
+Google,West Memphis,Crittenden,Arkansas,AR,05035,under construction,
+Google,Michigan City,LaPorte,Indiana,IN,18091,under construction,
+Google,Fort Wayne,Allen,Indiana,IN,18003,online,2025.0
+Google,Clarksville,Montgomery,Tennessee,TN,47125,online,2018.0
+Google,Bridgeport,Jackson,Alabama,AL,01071,online,2019.0
+Google,Lithia Springs,Douglas,Georgia,GA,13097,online,2003.0
+Google,LaGrange,Troup,Georgia,GA,13285,under construction,
+Google,Lenoir,Caldwell,North Carolina,NC,37027,online,2007.0
+Google,New Albany,Licking,Ohio,OH,39089,online,2020.0
+Google,Lancaster,Fairfield,Ohio,OH,39045,online,2024.0
+Google,Columbus,Franklin,Ohio,OH,39049,under construction,
+Google,Dorchester,Dorchester,South Carolina,SC,45035,under construction,
+Google,Moncks Corner,Berkeley,South Carolina,SC,45015,online,2008.0
+Google,Ridgeville,Dorchester,South Carolina,SC,45035,under construction,
+Google,Chesterfield,Chesterfield,Virginia,VA,51041,under construction,
+Google,Leesburg,Loudoun,Virginia,VA,51107,online,2019.0
+Google,Manassas,Prince William,Virginia,VA,51153,online,2023.0
