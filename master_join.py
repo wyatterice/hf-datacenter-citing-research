@@ -48,6 +48,12 @@ nlcd_cols = ["fips", "pct_open_water", "pct_developed_open", "pct_developed_low"
 nlcd = nlcd[nlcd_cols]
 print(f"  NLCD Land Cover: {len(nlcd)} counties")
 
+# PAD-US Protected Lands
+pad = pd.read_csv("Land/pad_protected_lands.csv")
+pad["fips"] = pad["fips"].apply(standardize_fips)
+pad = pad[["fips", "pct_gap1", "pct_gap2", "pct_gap3", "pct_gap1_2", "pct_gap1_2_3"]]
+print(f"  PAD-US Protected Lands: {len(pad)} counties")
+
 # EIA + FCC Combined
 eia_fcc = pd.read_csv("Energy_Broadband/eia_fcc_combined.csv")
 eia_fcc["fips"] = eia_fcc["GeoKey"].apply(standardize_fips)
@@ -67,6 +73,7 @@ master = master.merge(fema, on="fips", how="left")
 master = master.merge(noaa, on="fips", how="left")
 master = master.merge(drought, on="fips", how="left")
 master = master.merge(nlcd, on="fips", how="left")
+master = master.merge(pad, on="fips", how="left")
 master = master.merge(eia_fcc, on="fips", how="left")
 
 print(f"\nMaster dataset: {len(master)} counties, {len(master.columns)} columns")
@@ -75,6 +82,7 @@ print(f"  FEMA NRI (risk_score): {master['RISK_SCORE'].isna().sum()}")
 print(f"  NOAA Precip: {master['avg_annual_precip_in'].isna().sum()}")
 print(f"  Drought Monitor: {master['pct_weeks_d1_plus'].isna().sum()}")
 print(f"  NLCD Land Cover: {master['pct_potentially_developable'].isna().sum()}")
+print(f"  PAD-US Protected Lands: {master['pct_gap1'].isna().sum()}")
 print(f"  EIA + FCC: {master['FiberCoverage100_20'].isna().sum()}")
 
 print("\nSample:")
