@@ -54,15 +54,20 @@ pad["fips"] = pad["fips"].apply(standardize_fips)
 pad = pad[["fips", "pct_gap1", "pct_gap2", "pct_gap3", "pct_gap1_2", "pct_gap1_2_3"]]
 print(f"  PAD-US Protected Lands: {len(pad)} counties")
 
-# EIA + FCC Combined
-eia_fcc = pd.read_csv("Energy_Broadband/eia_fcc_combined.csv")
+# EIA + FCC Combined (v2 — includes broader broadband coverage, tags GeoType)
+eia_fcc = pd.read_csv("Energy_Broadband/eia_fcc_combined_v2.csv")
+
+# Filter to counties only — v2 also includes micropolitan statistical areas,
+# which are multi-county units and out of scope for this tool
+eia_fcc = eia_fcc[eia_fcc["GeoType"] == "county"].copy()
+
 eia_fcc["fips"] = eia_fcc["GeoKey"].apply(standardize_fips)
 eia_fcc = eia_fcc[["fips", "FiberCoverage100_20", "BroadbandAccessGigabit",
                     "GeneratorCount_OperatingPlanned",
                     "GeneratorCountPer1k_OperatingPlanned",
                     "NameplateCapacity_OperatingPlanned",
                     "NameplateCapacityPer1k_OperatingPlanned"]]
-print(f"  EIA + FCC: {len(eia_fcc)} counties")
+print(f"  EIA + FCC (v2, counties only): {len(eia_fcc)} counties")
 
 # ── Join all datasets ──────────────────────────────────────────────────────────
 
