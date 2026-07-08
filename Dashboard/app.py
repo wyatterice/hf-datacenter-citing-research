@@ -485,7 +485,7 @@ TIER_PRESETS = {
     "Hyperscale (500 MW)": 500,
 }
 
-est_c1, est_c2, est_c3 = st.columns([2, 1.5, 2.5])
+est_c1, est_c2 = st.columns([1, 1])
 
 with est_c1:
     selected_tier = st.selectbox(
@@ -503,13 +503,29 @@ with est_c2:
         key="est_custom_mw"
     )
 
+est_c3, est_c4 = st.columns([1, 1])
+
 with est_c3:
-    efficiency = st.radio(
-        "Efficiency scenario",
+    energy_efficiency = st.radio(
+        "Energy efficiency scenario",
         ["Conservative", "Default", "Optimistic"],
         index=1,
         horizontal=True,
-        key="est_efficiency"
+        key="est_energy_efficiency"
+    )
+
+with est_c4:
+    water_efficiency = st.radio(
+        "Water efficiency scenario",
+        ["Conservative", "Default", "Optimistic"],
+        index=1,
+        horizontal=True,
+        key="est_water_efficiency",
+        disabled=st.session_state.get("est_closed_loop", False)
+    )
+    closed_loop = st.checkbox(
+        "Closed-loop system (no evaporative water use — WUE = 0.0)",
+        key="est_closed_loop"
     )
 
 it_load_mw = float(custom_mw_raw) if custom_mw_raw is not None else float(TIER_PRESETS[selected_tier])
@@ -527,8 +543,8 @@ tier_key = mw_to_tier_key(it_load_mw)
 PUE_MAP = {"Conservative": 1.56, "Default": 1.30, "Optimistic": 1.09}
 WUE_MAP = {"Conservative": 1.90, "Default": 1.80, "Optimistic": 0.15}
 
-pue = PUE_MAP[efficiency]
-wue = WUE_MAP[efficiency]
+pue = PUE_MAP[energy_efficiency]
+wue = 0.0 if closed_loop else WUE_MAP[water_efficiency]
 
 HOURS_PER_YEAR  = 8_760
 BUILD_PER_MW    = 11_300_000
