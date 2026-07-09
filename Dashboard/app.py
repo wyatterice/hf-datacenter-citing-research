@@ -503,7 +503,7 @@ with est_c2:
         key="est_custom_mw"
     )
 
-est_c3, est_c4 = st.columns([1, 1])
+est_c3, est_c4, est_c5 = st.columns([1, 1.3, 1.3])
 
 with est_c3:
     energy_efficiency = st.radio(
@@ -528,6 +528,16 @@ with est_c4:
         key="est_closed_loop"
     )
 
+with est_c5:
+    facility_type = st.radio(
+        "Facility type",
+        ["Hyperscale (cloud/AI operator)", "Colocation (leased/wholesale)"],
+        index=0,
+        key="est_facility_type"
+    )
+
+facility_type_label = "Hyperscale" if facility_type.startswith("Hyperscale") else "Colocation"
+
 it_load_mw = float(custom_mw_raw) if custom_mw_raw is not None else float(TIER_PRESETS[selected_tier])
 
 # Derive tier key from actual MW for broadband/land range lookups
@@ -551,7 +561,13 @@ BUILD_PER_MW    = 11_300_000
 FITOUT_PER_MW   = 25_000_000
 PERM_PER_MW     = 1.5
 CONST_PER_MW    = 10.0
-INDIRECT_MULT   = 2.5
+
+# Indirect jobs multiplier — Bahar & Wright (2026) synthetic control study
+INDIRECT_MULT_MAP = {
+    "Hyperscale (cloud/AI operator)": 2.27,
+    "Colocation (leased/wholesale)":  1.05,
+}
+indirect_mult = INDIRECT_MULT_MAP[facility_type]
 
 # — Energy —
 grid_draw_mw = it_load_mw * pue
@@ -611,7 +627,7 @@ construction_cost = it_load_mw * BUILD_PER_MW
 ai_total_cost     = it_load_mw * (BUILD_PER_MW + FITOUT_PER_MW)
 permanent_jobs    = it_load_mw * PERM_PER_MW
 construction_jobs = it_load_mw * CONST_PER_MW
-indirect_jobs     = permanent_jobs * INDIRECT_MULT
+indirect_jobs     = permanent_jobs * indirect_mult
 
 # — Infrastructure demand cards —
 st.markdown(
@@ -679,7 +695,7 @@ econ_items = [
     ("With AI fit-out",    fmt_dollars(ai_total_cost),     "at $36.3M per MW"),
     ("Permanent jobs",     f"{permanent_jobs:,.0f}",        "at 1.5 jobs/MW (hyperscale automation)"),
     ("Construction jobs",  f"{construction_jobs:,.0f}",     "at 10 workers/MW (peak build)"),
-    ("Indirect jobs",      f"{indirect_jobs:,.0f}",         "2.5× permanent jobs (regional multiplier)"),
+    ("Indirect jobs",      f"{indirect_jobs:,.0f}",         f"{indirect_mult:g}× permanent jobs ({facility_type_label}, Bahar & Wright 2026)"),
 ]
 
 for j, (label, number, note) in enumerate(econ_items):
@@ -692,6 +708,49 @@ for j, (label, number, note) in enumerate(econ_items):
         </div>
         """, unsafe_allow_html=True)
 
+# — Information-sector job creation (ecosystem employment effect) —
+INFO_SECTOR_COPY = {
+    "Hyperscale (cloud/AI operator)": {
+        "number":  "23%",
+        "unit":    "information-sector employment gain — but only in counties with 4+ facilities",
+        "context": (
+            "A single hyperscale facility shows no statistically significant ecosystem employment effect. "
+            "Counties that have accumulated 4 or more hyperscale facilities show a 23% information-sector "
+            "employment gain — this is a facility-clustering effect, not a single-build outcome "
+            "(Bahar & Wright, 2026, synthetic control study)."
+        ),
+        "ask": (
+            "Don't let \"tech ecosystem jobs\" justify incentives for a single build — the employment upside "
+            "only materializes with facility clustering. If ecosystem jobs are part of the pitch, tie incentives "
+            "to follow-on investment commitments rather than this facility alone."
+        ),
+    },
+    "Colocation (leased/wholesale)": {
+        "number":  "No sig. effect",
+        "unit":    "information-sector employment impact",
+        "context": (
+            "No statistically significant information-sector employment effect was found for colocation "
+            "facilities, regardless of how many are built in a county (Bahar & Wright, 2026, synthetic "
+            "control study)."
+        ),
+        "ask": (
+            "Ecosystem job creation is not a reliable justification for colocation incentive requests — anchor "
+            "negotiating asks on lease revenue, property tax base, and direct facility jobs instead."
+        ),
+    },
+}
+info_copy = INFO_SECTOR_COPY[facility_type]
+
+st.markdown(f"""
+<div class="score-card" style="margin-top:1rem">
+    <div class="card-header">📊 Information-sector job creation — {facility_type_label}</div>
+    <div class="impact-number" style="font-size:1.8rem">{info_copy['number']}</div>
+    <div class="impact-unit">{info_copy['unit']}</div>
+    <div class="impact-context">{info_copy['context']}</div>
+    <div class="impact-ask">{info_copy['ask']}</div>
+</div>
+""", unsafe_allow_html=True)
+
 st.markdown("""
 <div class="est-caveat">
     ⚠ Nameplate capacity is theoretical maximum generation; available headroom depends on existing load,
@@ -699,6 +758,126 @@ st.markdown("""
     A single datacenter facility creates modest permanent employment — hyperscale automation limits on-site staff
     to roughly 1.5 jobs per MW. Ecosystem employment concentrates in hyperscale clusters over time, not in a
     single facility's direct hire (Brookings, 2026).
+</div>
+""", unsafe_allow_html=True)
+
+# — Tax & Incentive Estimator —
+st.markdown(
+    '<div class="section-label" style="margin-top:1.75rem">Tax & incentive estimator</div>',
+    unsafe_allow_html=True
+)
+
+cost_basis = st.radio(
+    "Cost basis for assessed value",
+    ["Shell + core", "Shell + core + AI fit-out"],
+    index=0,
+    horizontal=True,
+    key="est_cost_basis"
+)
+selected_total_cost = construction_cost if cost_basis == "Shell + core" else ai_total_cost
+
+tax_i1, tax_i2, tax_i3, tax_i4 = st.columns(4)
+
+with tax_i1:
+    millage_rate = st.number_input(
+        "Local millage rate ($ per $1,000 assessed value)",
+        min_value=0.0,
+        value=20.0,
+        step=0.5,
+        key="est_millage"
+    )
+
+with tax_i2:
+    assessment_ratio = st.number_input(
+        "Assessment ratio (%)",
+        min_value=1.0,
+        max_value=100.0,
+        value=100.0,
+        step=1.0,
+        key="est_assess_ratio"
+    )
+
+with tax_i3:
+    abatement_pct = st.slider(
+        "Abatement (%)",
+        min_value=0,
+        max_value=100,
+        value=0,
+        step=1,
+        key="est_abatement_pct"
+    )
+
+with tax_i4:
+    abatement_years = st.number_input(
+        "Abatement duration (years)",
+        min_value=0,
+        max_value=50,
+        value=10,
+        step=1,
+        key="est_abatement_years"
+    )
+
+def fmt_dollars_tax(n):
+    if n >= 1_000_000_000:
+        return f"${n/1_000_000_000:.2f}B"
+    if n >= 1_000_000:
+        return f"${n/1_000_000:.2f}M"
+    return f"${n:,.0f}"
+
+assessed_value     = selected_total_cost * (assessment_ratio / 100)
+annual_tax_full     = assessed_value * (millage_rate / 1000)
+annual_tax_abated   = annual_tax_full * (1 - abatement_pct / 100)
+
+TAX_WINDOW_YEARS         = 10
+abated_years_in_window   = min(abatement_years, TAX_WINDOW_YEARS)
+full_years_in_window     = TAX_WINDOW_YEARS - abated_years_in_window
+revenue_without_abatement = annual_tax_full * TAX_WINDOW_YEARS
+revenue_with_abatement    = (annual_tax_abated * abated_years_in_window) + (annual_tax_full * full_years_in_window)
+revenue_gap               = revenue_without_abatement - revenue_with_abatement
+
+INCENTIVE_NORM_MAP = {
+    "Hyperscale (cloud/AI operator)": 2,
+    "Colocation (leased/wholesale)":  62,
+}
+incentive_norm_pct = INCENTIVE_NORM_MAP[facility_type]
+
+tax_cols = st.columns(3)
+
+with tax_cols[0]:
+    st.markdown(f"""
+    <div class="score-card">
+        <div class="card-header">💰 Annual tax — full rate</div>
+        <div class="impact-number" style="font-size:1.8rem">{fmt_dollars_tax(annual_tax_full)}</div>
+        <div class="impact-unit">assessed value {fmt_dollars_tax(assessed_value)} × {millage_rate:g} mills</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with tax_cols[1]:
+    st.markdown(f"""
+    <div class="score-card">
+        <div class="card-header">🏷 Annual tax — during abatement</div>
+        <div class="impact-number" style="font-size:1.8rem">{fmt_dollars_tax(annual_tax_abated)}</div>
+        <div class="impact-unit">at {abatement_pct}% abatement for {abatement_years} year(s)</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with tax_cols[2]:
+    st.markdown(f"""
+    <div class="score-card">
+        <div class="card-header">📉 10-year revenue gap</div>
+        <div class="impact-number" style="font-size:1.8rem">{fmt_dollars_tax(revenue_gap)}</div>
+        <div class="impact-unit">{fmt_dollars_tax(revenue_with_abatement)} with abatement vs. {fmt_dollars_tax(revenue_without_abatement)} without</div>
+        <div class="impact-context">Your modeled abatement is {abatement_pct}% of assessed value. Bahar & Wright (2026) find incentives average
+        ~{incentive_norm_pct}% of investment in {facility_type_label.lower()} deals — use that as a real-world benchmark for this facility type.</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+st.markdown("""
+<div class="est-caveat">
+    ℹ Sales tax exemptions on equipment purchases (servers, cooling, switchgear) are common in datacenter
+    incentive packages and are not modeled above. Virginia's data center sales-tax exemption alone cost an
+    estimated $1.6B in FY2025 — confirm whether an equivalent exemption applies in your state before finalizing
+    incentive comparisons.
 </div>
 """, unsafe_allow_html=True)
 
