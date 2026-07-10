@@ -42,4 +42,12 @@ test.describe('datacenter impact tool', () => {
       await expect(nav.locator('.nav-item', { hasText: label })).toHaveCount(1)
     }
   })
+
+  test('clicking a nav link scrolls to its section', async ({ page }) => {
+    await page.goto('/')
+    await expect(page.locator('#tax')).not.toBeInViewport()
+    await page.locator('.nav-toggle').click()
+    await page.locator('.nav-item', { hasText: 'Tax' }).click()
+    await expect(page.locator('#tax')).toBeInViewport()
+  })
 })
