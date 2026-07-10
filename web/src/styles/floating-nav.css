@@ -1,0 +1,406 @@
+/* ========== FLOATING NAVIGATION ========== */
+
+.floating-nav {
+  position: fixed;
+  bottom: 26px;
+  right: 26px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 13px;
+}
+
+.nav-toggle,
+.nav-search-btn,
+.nav-user-btn,
+.nav-translator-btn {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  max-width: 48px;
+  min-height: 48px;
+  max-height: 48px;
+  padding: 0;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--brand-navy);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 3px 16px var(--brand-navy-alpha-30);
+  transition: background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 10001;
+  transform: scale(1);
+}
+
+.nav-toggle:hover,
+.nav-search-btn:hover,
+.nav-user-btn:hover,
+.nav-translator-btn:hover {
+  background: var(--brand-navy-dark);
+  transform: scale(1.05);
+  box-shadow: 0 5px 24px var(--brand-navy-alpha-40);
+}
+
+/*
+ * Dark mode: floating nav buttons use the bright emerald instead of
+ * the brand navy. On a dark page the navy circle disappears against
+ * the canvas; emerald keeps the buttons readable as primary CTAs.
+ */
+[data-theme="dark"] .nav-toggle,
+[data-theme="dark"] .nav-search-btn,
+[data-theme="dark"] .nav-user-btn,
+[data-theme="dark"] .nav-translator-btn {
+  background: var(--brand-emerald);
+  box-shadow: 0 3px 16px var(--brand-emerald-bright-alpha-30);
+}
+
+[data-theme="dark"] .nav-toggle:hover,
+[data-theme="dark"] .nav-search-btn:hover,
+[data-theme="dark"] .nav-user-btn:hover,
+[data-theme="dark"] .nav-translator-btn:hover {
+  background: var(--brand-emerald-bright);
+  box-shadow: 0 5px 24px var(--brand-emerald-bright-alpha-40);
+}
+
+.nav-toggle:active,
+.nav-search-btn:active,
+.nav-user-btn:active,
+.nav-translator-btn:active {
+  transform: scale(0.95);
+}
+
+
+.nav-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 19px;
+}
+
+.nav-icon span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  /*
+   * Hamburger lines always sit on a brand-colored button (navy in
+   * light mode, emerald in dark mode). Hardcoded white reads on both
+   * because the button bg is always colored, never white.
+   */
+  background: #ffffff;
+  border-radius: 2px;
+  transition: background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hamburger to X animation when active */
+.floating-nav.active .nav-icon span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.floating-nav.active .nav-icon span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-8px);
+}
+
+.floating-nav.active .nav-icon span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* Navigation items container */
+.nav-items {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px);
+  transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.15s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), max-height 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  max-height: 0;
+  overflow: hidden;
+}
+
+.floating-nav.active .nav-items {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  max-height: 540px;
+}
+
+/* Individual nav item buttons */
+.nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 16px;
+  background: var(--bg-surface);
+  border: 2px solid var(--border-default);
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--brand-navy-text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  transition: background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 176px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  background: var(--bg-surface-raised);
+  border-color: var(--brand-emerald);
+}
+
+.nav-item.active {
+  background: linear-gradient(135deg, var(--brand-navy) 0%, var(--brand-navy-dark) 100%);
+  color: var(--text-inverse);
+  border-color: var(--brand-navy);
+  box-shadow: 0 3px 13px var(--brand-navy-alpha-30);
+}
+
+/*
+ * Dark mode: active nav flips to the emerald CTA palette so it matches
+ * the floating action buttons (also emerald in dark). The navy gradient
+ * on a dark canvas reads as another dark slab rather than a clear
+ * "you are here" indicator.
+ */
+[data-theme="dark"] .nav-item.active {
+  background: linear-gradient(135deg, var(--brand-emerald) 0%, var(--brand-emerald-dark) 100%);
+  border-color: var(--brand-emerald);
+  box-shadow: 0 3px 13px var(--brand-emerald-bright-alpha-30);
+}
+
+/* Change location item */
+.nav-item.change-location-item {
+  background: linear-gradient(135deg, var(--brand-emerald) 0%, var(--brand-emerald-dark) 100%);
+  color: var(--text-inverse);
+  border-color: var(--brand-emerald);
+  margin-top: 4px;
+}
+
+.nav-item.change-location-item:hover {
+  background: linear-gradient(135deg, var(--brand-emerald-dark) 0%, var(--status-success-deepest) 100%);
+  border-color: var(--brand-emerald-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--brand-emerald-bright-alpha-30);
+}
+
+.nav-item.change-location-item svg {
+  flex-shrink: 0;
+}
+
+/* Progress bar */
+.nav-progress {
+  width: 3px;
+  height: 64px;
+  background: var(--brand-navy-alpha-10);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-right: 22px;
+  opacity: 0;
+  visibility: hidden;
+  transition: background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floating-nav.active .nav-progress {
+  opacity: 1;
+  visibility: visible;
+}
+
+.nav-progress-bar {
+  width: 100%;
+  height: 0%;
+  background: linear-gradient(180deg, var(--brand-emerald) 0%, var(--brand-emerald-dark) 100%);
+  border-radius: 2px;
+  transition: height 0.15s ease-out;
+}
+
+.nav-toggle:focus-visible,
+.nav-search-btn:focus-visible,
+.nav-user-btn:focus-visible,
+.nav-translator-btn:focus-visible,
+.nav-item:focus-visible {
+  outline: 2px solid var(--brand-navy);
+  outline-offset: 3px;
+}
+
+/*
+ * The Translator button anchors the popover, so a hover/active scale would
+ * nudge the open panel. Keep the background feedback but hold it still.
+ */
+.nav-translator-btn:hover,
+.nav-translator-btn:active {
+  transform: none;
+}
+
+/* Morph the translator glyph between the chat icon (closed) and a close X
+   (open), mirroring the hamburger-to-X affordance on the nav toggle. */
+.nav-translator-glyph {
+  position: relative;
+  width: 22px;
+  height: 22px;
+}
+
+.nav-translator-glyph svg {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.nav-translator-glyph .is-hidden-closed {
+  transform: scale(0) rotate(90deg);
+  opacity: 0;
+}
+
+.nav-translator-glyph .is-hidden-open {
+  transform: scale(0) rotate(-90deg);
+  opacity: 0;
+}
+
+/* ========== RESPONSIVE STYLES ========== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .floating-nav {
+    bottom: 26px;
+    right: 19px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .floating-nav {
+    bottom: 26px;
+    right: 19px;
+    transform: none;
+  }
+
+  .nav-items {
+    position: fixed;
+    bottom: 80px;
+    right: 10px;
+    max-height: none;
+  }
+
+  .floating-nav.active .nav-items {
+    max-height: none;
+  }
+
+  /* Hide progress bar on mobile */
+  .nav-progress {
+    display: none;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) and (max-width: 768px) {
+  .nav-search-btn,
+  .nav-user-btn {
+    display: none;
+    position: absolute;
+    bottom: 0;
+  }
+
+  .nav-items {
+    width: min(204px, calc(100vw - 20px));
+    bottom: 86px;
+    right: 10px;
+  }
+
+  .nav-item {
+    min-width: 100%;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.25;
+    padding: 10px 12px;
+  }
+
+  .floating-nav.active .nav-user-btn,
+  .floating-nav.active .nav-search-btn {
+    display: flex;
+  }
+
+  .floating-nav.active .nav-user-btn {
+    right: 58px;
+  }
+
+  .floating-nav.active .nav-search-btn {
+    right: 116px;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .floating-nav {
+    bottom: 13px;
+    right: 13px;
+  }
+
+  .nav-toggle {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    max-width: 44px;
+    min-height: 44px;
+    max-height: 44px;
+  }
+
+  .nav-search-btn,
+  .nav-user-btn,
+  .nav-translator-btn {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    max-width: 44px;
+    min-height: 44px;
+    max-height: 44px;
+  }
+
+  .nav-search-btn svg,
+  .nav-user-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .nav-icon {
+    width: 16px;
+  }
+
+  .nav-item {
+    font-size: 10px;
+    padding: 9px 12px;
+    min-width: 150px;
+  }
+
+  .nav-items {
+    bottom: 110px;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) and (max-width: 480px) {
+  .nav-items {
+    width: min(192px, calc(100vw - 16px));
+    bottom: 64px;
+    right: 8px;
+  }
+
+  .nav-item {
+    min-width: 100%;
+    font-size: 10px;
+    padding: 9px 10px;
+  }
+
+  .floating-nav.active .nav-user-btn {
+    right: 52px;
+  }
+
+  .floating-nav.active .nav-search-btn {
+    right: 104px;
+  }
+}

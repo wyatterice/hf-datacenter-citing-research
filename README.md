@@ -43,6 +43,11 @@ An **Infrastructure Impact Estimator** lets a user model a hypothetical facility
 ├── Dashboard/
 │   └── app.py                      # Streamlit dashboard
 │
+├── web/                            # React front-end (Vite + TS), CIR-branded
+│   ├── src/                        # App, components, lib (ported scoring/estimator), CIR styles
+│   ├── public/scores.json          # Generated from Model/county_scores.csv
+│   └── scripts/build-data.mjs      # `npm run build:data` regenerates scores.json
+│
 └── master_county_dataset.csv       # Joined dataset, all 4 categories, ~3,100 counties
 ```
 
@@ -62,6 +67,19 @@ Requires Streamlit (`pip install streamlit` — use Anaconda Prompt, not a stand
 ```
 streamlit run Dashboard/app.py
 ```
+
+## React front-end (web/)
+
+A second front-end that matches the Heartland Forward / CIR dashboard design system (shared tokens, components, and footer CSS). Same tool, rebuilt in React because Streamlit confines all content to one centered block and can't reproduce the brand layout (full-bleed footer, fixed section nav, centered column). The Python pipeline is unchanged: the app reads `Model/county_scores.csv` through a generated `web/public/scores.json`.
+
+```
+cd web
+npm install
+npm run build:data   # regenerate scores.json from ../Model/county_scores.csv
+npm run dev          # http://localhost:5173
+```
+
+`npm run build` outputs a static bundle to `web/dist/`. Re-run `npm run build:data` whenever `county_scores.csv` changes.
 
 ## Known issues / open items
 

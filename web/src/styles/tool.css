@@ -1,0 +1,425 @@
+/*
+ * Datacenter Impact Research Tool element styles.
+ * Colors, fonts, and card conventions come from the CIR brand tokens
+ * (tokens.css / shared.css). This file only maps the tool's own pieces.
+ */
+
+.dc-container {
+  padding-top: 2.5rem;
+  padding-bottom: 3rem;
+}
+
+.dc-loading {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+
+/* Page header: navy heading on the canvas, emerald subtitle, thin divider. */
+.tool-header {
+  padding: 0.5rem 0 1.75rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.tool-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.4rem 0;
+  color: var(--brand-navy-text);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.tool-header p {
+  font-size: 0.9rem;
+  margin: 0;
+  color: var(--brand-emerald);
+  line-height: 1.6;
+}
+
+/* Major section heading inside a .pillar-section (border/whitespace come from
+   the CIR .pillar-section). */
+.dc-section {
+  padding-top: 72px;
+  padding-bottom: 24px;
+}
+
+.est-header {
+  margin-bottom: 40px;
+}
+
+.est-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  color: var(--brand-navy-text);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.est-header p {
+  font-size: 0.9rem;
+  margin: 0;
+  color: var(--brand-emerald);
+  line-height: 1.6;
+  max-width: 520px;
+}
+
+/* Our sub-section headers are static, not collapsible like CIR's. */
+.dc-subsection .metrics-section-header {
+  cursor: default;
+}
+
+.dc-subsection .metrics-section-header:hover {
+  opacity: 1;
+}
+
+/* Controls */
+.dc-controls-row {
+  display: grid;
+  grid-template-columns: repeat(var(--dc-cols, 2), minmax(0, 1fr));
+  gap: 20px 24px;
+  align-items: start;
+  margin-bottom: 24px;
+}
+
+.dc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dc-field-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-form);
+}
+
+.dc-field-hint {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.dc-select,
+.dc-input {
+  font-family: inherit;
+  font-size: 0.85rem;
+  padding: 9px 12px;
+  border: 1px solid var(--border-input);
+  border-radius: 8px;
+  background: var(--bg-surface);
+  color: var(--text-form-strong);
+  width: 100%;
+  cursor: pointer;
+  transition: border-color 0.1s ease, box-shadow 0.1s ease;
+}
+
+.dc-input {
+  cursor: text;
+}
+
+.dc-select:focus,
+.dc-input:focus {
+  outline: none;
+  border-color: var(--brand-emerald-bright);
+  box-shadow: 0 0 0 3px var(--brand-emerald-bright-alpha-focus);
+}
+
+/* Size the toggle to its buttons instead of stretching to the field width,
+   so there is no empty bordered gap and the buttons never wrap. */
+.dc-segmented {
+  align-self: start;
+  flex-wrap: nowrap;
+  max-width: 100%;
+}
+
+.dc-segmented .time-range-btn {
+  padding: 8px 14px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.dc-segmented.dc-disabled {
+  opacity: 0.5;
+}
+
+/* Group inputs into a white panel on the gray canvas (CIR .location-container
+   pattern), so controls read as one intentional block instead of scattered
+   fields. */
+.dc-panel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  box-shadow: 0 2px 3px var(--shadow-card);
+  padding: 24px 24px 26px;
+}
+
+.dc-panel .dc-controls-row {
+  margin-bottom: 22px;
+}
+
+.dc-panel .dc-controls-row:last-child {
+  margin-bottom: 0;
+}
+
+.dc-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  font-size: 0.78rem;
+  color: var(--text-form-secondary);
+}
+
+.dc-checkbox input {
+  accent-color: var(--brand-emerald);
+}
+
+.dc-slider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dc-slider input[type='range'] {
+  flex: 1;
+  accent-color: var(--brand-emerald);
+}
+
+.dc-slider-value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-strong);
+  min-width: 40px;
+  text-align: right;
+}
+
+/* Card grids */
+.dc-grid {
+  display: grid;
+  gap: 19px;
+  margin-top: 8px;
+}
+
+.dc-grid-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.dc-grid-5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.dc-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.dc-card {
+  margin-bottom: 0;
+  padding: 22px 20px 24px;
+}
+
+.dc-card-wide {
+  margin-top: 19px;
+}
+
+/* Card internals */
+.card-header {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  margin-bottom: 0.9rem;
+}
+
+.score-number {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.3rem;
+}
+
+.score-suffix {
+  font-size: 1.05rem;
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+.tier-pill {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.2rem 0.65rem;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.tier-strong {
+  background: var(--status-success-bg-pale);
+  color: var(--status-success-strong-2);
+}
+
+.tier-moderate {
+  background: var(--status-warning-bg-pale);
+  color: var(--status-warning-strong);
+}
+
+.tier-leverage {
+  background: var(--status-error-bg-pale);
+  color: var(--status-error-strong);
+}
+
+.raw-value {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.raw-value strong {
+  color: var(--text-deep);
+}
+
+/* Clean, quiet callout: hairline border, no colored spine. Tier is already
+   conveyed by the pill and the score-number color. */
+.insight-box {
+  font-size: 0.76rem;
+  line-height: 1.5;
+  color: var(--text-tertiary);
+  background: var(--bg-surface-raised);
+  border: 1px solid var(--border-subtle);
+  padding: 0.7rem 0.85rem;
+  border-radius: 8px;
+}
+
+.no-data-score {
+  font-size: 0.8rem;
+  color: var(--text-disabled);
+  font-style: italic;
+}
+
+.hyperscaler-badge {
+  background: var(--brand-navy);
+  color: var(--bg-overlay-fade-70);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 1.25rem;
+}
+
+.impact-number {
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--brand-navy-text);
+  margin-bottom: 0.2rem;
+}
+
+.impact-number-md {
+  font-size: 1.7rem;
+}
+
+.impact-number-sm {
+  font-size: 1.4rem;
+  margin-bottom: 0.3rem;
+}
+
+.impact-unit {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-bottom: 0.6rem;
+}
+
+.impact-sub {
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.impact-context {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  background: var(--bg-surface-raised);
+  border: 1px solid var(--border-subtle);
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  line-height: 1.5;
+  margin-top: 0.6rem;
+}
+
+/* The negotiation "ask" stays distinct via a subtle emerald (brand) tint,
+   not an orange spine. */
+.impact-ask {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  background: var(--brand-emerald-alpha-08);
+  border: 1px solid var(--brand-emerald-alpha-15);
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  line-height: 1.5;
+  margin-top: 0.5rem;
+}
+
+.econ-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-secondary);
+  margin-bottom: 0.6rem;
+}
+
+.econ-number {
+  font-size: 1.9rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--brand-navy-text);
+  margin-bottom: 0.2rem;
+}
+
+.est-caveat {
+  font-size: 0.74rem;
+  color: var(--text-disabled);
+  font-style: italic;
+  line-height: 1.55;
+  margin-top: 1.5rem;
+}
+
+.dc-methodology {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-top: 1.5rem;
+}
+
+/* Responsive: collapse dense card rows before they get cramped. */
+@media (max-width: 860px) {
+  .dc-grid-4,
+  .dc-grid-5 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .dc-grid-3 {
+    grid-template-columns: 1fr;
+  }
+  .dc-controls-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .dc-grid-4,
+  .dc-grid-5,
+  .dc-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
