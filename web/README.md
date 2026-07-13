@@ -18,6 +18,14 @@ npm run dev          # http://localhost:5173
 - `npm run build` — type-check and build to `dist/`
 - `npm run build:data` — regenerate `public/scores.json` from `../Model/county_scores.csv`
 - `npm run lint` — oxlint
+- `npm run test:e2e` — Playwright smoke suite
+
+## Deployment
+
+Pushes to `main` deploy to GitHub Pages via `../.github/workflows/deploy-pages.yml`
+(build `web/` then publish `dist/`). The production build sets `base` to
+`/hf-datacenter-citing-research/` to match the Pages project subpath; dev and the
+Playwright suite keep the root base, so local URLs stay at `/`.
 
 ## Structure
 
