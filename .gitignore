@@ -1,3 +1,7 @@
+# Python virtual environments
+.venv/
+venv/
+
 # Large geospatial data files
 Land/Annual_NLCD_LndCov_2024_CU_C1V1/
 Land/tl_2025_us_county/

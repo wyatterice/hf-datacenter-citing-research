@@ -1,0 +1,733 @@
+/* Shared Dashboard Styles */
+/* Used across all pillar sections (Regional, Health, Talent) */
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 38px;
+}
+
+.pillar-section {
+  border-top: 1px solid var(--border-default);
+  padding-top: 112px;
+  padding-bottom: 64px;
+}
+
+.pillar-header {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 64px;
+  gap: 26px;
+  padding-bottom: 32px;
+}
+
+.pillar-header-content {
+  flex: 1;
+  padding-top: 6px;
+}
+
+.pillar-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.pillar-header h2 {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--brand-navy-text);
+  margin: 0;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.pillar-header p {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-size: 0.9rem;
+  max-width: 480px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.heartland-badge {
+  opacity: 0.6;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--brand-emerald);
+  background: var(--brand-emerald-alpha-10);
+  padding: 4px 8px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+/* Metrics Section */
+.metrics-section {
+  margin-bottom: 48px;
+  clear: both;
+  padding: 16px 0;
+  contain: layout style;
+}
+
+.metrics-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  padding-bottom: 19px;
+  border-bottom: 2px solid var(--border-default);
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.metrics-section-header::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 48px;
+  height: 2px;
+  background: var(--brand-emerald);
+}
+
+.metrics-section-header:hover {
+  opacity: 0.8;
+}
+
+.metrics-section h3 {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+/* Outer (and only) content-visibility layer. Sections that know their
+   rendered height set --cv-intrinsic-size inline via CollapsibleSection so
+   the cached size matches actual layout and the region doesn't shift on
+   first scroll-in. Falls back to 800px when no per-section size is plumbed. */
+.metrics-section-content {
+  overflow: visible;
+  transition: opacity 0.3s ease-out;
+  content-visibility: auto;
+  contain-intrinsic-size: auto var(--cv-intrinsic-size, 800px);
+}
+
+/* Temporarily disable content-visibility during window resize so the browser
+   discards stale cached heights and remeasures on next scroll. */
+.cv-invalidate .metrics-section-content {
+  content-visibility: visible;
+}
+
+.metrics-section.collapsed .metrics-section-content {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.metrics-section.collapsed .metrics-section-content .chart-wrapper {
+  display: none;
+}
+
+/* Section Header Actions */
+.section-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.section-toggle-icon {
+  width: 19px;
+  height: 19px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease;
+}
+
+.section-toggle-icon::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid var(--text-muted);
+  border-bottom: 2px solid var(--text-muted);
+  transform: rotate(45deg);
+  transition: transform 0.15s ease;
+}
+
+.metrics-section.collapsed .section-toggle-icon::before {
+  transform: rotate(-135deg);
+}
+
+/* Export Button */
+.export-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  color: var(--brand-emerald);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.1s ease, color 0.1s ease, transform 0.1s ease;
+  flex-shrink: 0;
+}
+
+.export-button:hover {
+  background: var(--brand-emerald-alpha-10);
+  color: var(--brand-emerald-dark);
+}
+
+.export-button:active {
+  transform: scale(0.98);
+}
+
+.export-button svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Favorite Button */
+.favorite-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--text-disabled);
+  padding: 6px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.1s ease, color 0.1s ease, transform 0.1s ease;
+  flex-shrink: 0;
+}
+
+.favorite-button:hover {
+  background: var(--brand-emerald-bright-alpha-10);
+  color: var(--brand-emerald-bright);
+}
+
+.favorite-button:active {
+  transform: scale(0.95);
+}
+
+.favorite-button.favorited {
+  color: var(--brand-emerald-bright);
+}
+
+.favorite-button.favorited:hover {
+  background: var(--brand-emerald-bright-alpha-15);
+  color: var(--brand-emerald-bright-dark);
+}
+
+.favorite-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Chart Container with Sidebar.
+   No content-visibility here: nested CV (section > container > wrapper)
+   thrashes intrinsic-size caches on every shift. CV lives only on
+   .metrics-section-content. */
+.chart-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 32px;
+  align-items: stretch;
+  margin-top: 32px;
+  margin-bottom: 48px;
+}
+
+/* Chart Card */
+.chart-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  position: relative;
+  box-shadow: 0 2px 3px var(--shadow-card);
+  height: auto;
+  padding: 26px 26px 32px 26px;
+  margin-bottom: 19px;
+  display: flex;
+  flex-direction: column;
+  contain: style;
+  min-width: 0;
+}
+
+.chart-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 16px var(--shadow-card-hover);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.chart-card h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 19px;
+  color: var(--text-primary);
+}
+
+/* Chart cards inside grid container */
+.chart-container .chart-card {
+  margin-bottom: 0;
+}
+
+.chart-container .chart-card .chart-canvas-wrapper {
+  flex: 1;
+  min-height: 280px;
+}
+
+/* Metrics Sidebar */
+.metrics-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+  min-width: 0;
+}
+
+.metric-item {
+  background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-surface-raised) 100%);
+  padding: 22px 19px;
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 96px;
+  position: relative;
+  box-shadow: 0 2px 3px var(--shadow-card);
+  overflow: hidden;
+  contain: layout style paint;
+  min-width: 0;
+}
+
+.metric-item:has(.metric-info-inline) {
+  overflow: visible;
+  contain: none;
+}
+
+.metric-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--shadow-modal);
+  border-color: var(--border-strong);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.metric-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-strong);
+  display: block;
+  line-height: 1.1;
+  margin-bottom: 6px;
+  background: linear-gradient(135deg, var(--text-deep) 0%, var(--text-tertiary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.metric-label {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  margin: 0 0 5px 0;
+  display: block;
+  line-height: 1.3;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.metric-change {
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 3px 6px;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  letter-spacing: 0.025em;
+  position: relative;
+}
+
+.metric-change.positive {
+  color: var(--status-success-strong);
+  background: var(--status-success-bg-soft);
+  border: 1px solid var(--status-success-border-soft);
+}
+
+.metric-change.positive::before {
+  content: '\2197';
+  margin-right: 3px;
+  font-weight: 700;
+}
+
+.metric-change.negative {
+  color: var(--status-error);
+  background: var(--status-error-bg-soft);
+  border: 1px solid var(--status-error-border-soft);
+}
+
+.metric-change.negative::before {
+  content: '\2198';
+  margin-right: 3px;
+  font-weight: 700;
+}
+
+.metric-change.neutral {
+  color: var(--status-neutral);
+  background: var(--status-neutral-bg-soft);
+  border: 1px solid var(--status-neutral-border-soft);
+}
+
+.metric-change.neutral::before {
+  content: '\2192';
+  margin-right: 3px;
+  font-weight: 700;
+}
+
+.metric-change.warning {
+  color: var(--status-warning);
+  background: var(--status-warning-bg-soft);
+  border: 1px solid var(--status-warning-border-soft);
+}
+
+.metric-change.warning::before {
+  content: '\26A0';
+  margin-right: 3px;
+  font-weight: 700;
+}
+
+/* Comparison indicators (checkmark instead of arrow for benchmark comparisons) */
+.metric-change.comparison.positive::before {
+  content: '\2714';
+}
+
+/* Demographics Dual Chart Layout */
+.demographics-dual-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.demographics-chart-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-header-with-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 19px;
+  padding-right: 32px;
+}
+
+.chart-header-with-toggle h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0;
+}
+
+/* Year Selector */
+.year-selector {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  margin-bottom: 6px;
+}
+
+.year-selector label {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.year-selector select {
+  padding: 5px 10px;
+  border: 1px solid var(--border-input);
+  border-radius: 5px;
+  background: var(--bg-surface);
+  font-size: 0.7rem;
+  color: var(--text-form);
+  cursor: pointer;
+}
+
+.year-selector select:focus {
+  outline: none;
+  border-color: var(--border-focus-blue);
+  box-shadow: 0 0 0 2px var(--border-focus-blue-alpha);
+}
+
+/* Time Range Preset Buttons */
+.time-range-selector {
+  display: inline-flex;
+  border: 1px solid var(--border-default);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.time-range-btn {
+  padding: 4px 10px;
+  border: none;
+  border-right: 1px solid var(--border-default);
+  background: var(--bg-surface-raised);
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+  font-family: inherit;
+}
+
+.time-range-btn:last-child {
+  border-right: none;
+}
+
+.time-range-btn:hover:not(.active) {
+  background: var(--bg-active);
+  color: var(--brand-navy-text);
+}
+
+.time-range-btn.active {
+  background: var(--brand-emerald);
+  color: var(--text-inverse);
+}
+
+.chart-selectors {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.race-selector {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  margin-bottom: 6px;
+}
+
+.race-selector label {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.race-selector select {
+  padding: 5px 10px;
+  border: 1px solid var(--border-input);
+  border-radius: 5px;
+  background: var(--bg-surface);
+  font-size: 0.7rem;
+  color: var(--text-form);
+  cursor: pointer;
+}
+
+.race-selector select:focus {
+  outline: none;
+  border-color: var(--border-focus-blue);
+  box-shadow: 0 0 0 2px var(--border-focus-blue-alpha);
+}
+
+/* Demographics Metrics Grid (below chart layout) */
+.demographics-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 19px;
+  margin-top: 26px;
+}
+
+.demographics-metrics-grid.metrics-grid-columns-1 {
+  grid-template-columns: 1fr;
+}
+
+.demographics-metrics-grid.metrics-grid-columns-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.demographics-metrics-grid.metrics-grid-columns-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.demographics-metrics-grid .metric-item {
+  min-height: auto;
+  justify-content: flex-start;
+  overflow: visible;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
+
+  .chart-container {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    margin-top: 24px;
+    margin-bottom: 32px;
+  }
+
+  .metrics-sidebar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .metric-item {
+    flex: 1 1 calc(50% - 6px);
+    min-width: 140px;
+  }
+
+  .pillar-section {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+
+  .pillar-header {
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .pillar-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .pillar-header-top {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .metrics-section {
+    margin-bottom: 32px;
+  }
+
+  .metrics-section-header {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .demographics-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0 16px;
+  }
+
+  .demographics-dual-chart {
+    gap: 28px;
+  }
+
+  .demographics-chart-block {
+    gap: 0;
+  }
+
+  .chart-header-with-toggle {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-right: 0;
+  }
+
+  .chart-header-with-toggle h4 {
+    width: 100%;
+    line-height: 1.35;
+    padding-right: 32px;
+  }
+
+  .metrics-section-header {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 14px;
+  }
+
+  .section-header-actions {
+    justify-content: flex-end;
+    width: auto;
+  }
+
+  .chart-card {
+    padding: 18px 18px 22px;
+    margin-bottom: 16px;
+  }
+
+  .chart-selectors {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .chart-selectors .year-selector,
+  .chart-selectors .race-selector {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .chart-selectors .year-selector > .chart-selector,
+  .chart-selectors .year-selector > .app-select,
+  .chart-selectors .year-selector > select,
+  .chart-selectors .race-selector > .chart-selector,
+  .chart-selectors .race-selector > .app-select,
+  .chart-selectors .race-selector > select {
+    width: 100%;
+  }
+
+  .chart-container .chart-card .chart-canvas-wrapper {
+    min-height: 240px;
+  }
+
+  .metrics-sidebar {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  .metric-item {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: auto;
+    padding: 16px 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .demographics-metrics-grid,
+  .demographics-metrics-grid.metrics-grid-columns-2,
+  .demographics-metrics-grid.metrics-grid-columns-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .pillar-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .pillar-header p {
+    font-size: 0.85rem;
+  }
+
+  .metrics-section h3 {
+    font-size: 1rem;
+  }
+
+  .chart-card {
+    padding: 16px;
+  }
+}

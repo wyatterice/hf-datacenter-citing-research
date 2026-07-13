@@ -1,0 +1,564 @@
+/*
+ * Color tokens for the dashboard.
+ *
+ * This file is the single source of truth for color values. CSS consumes
+ * these via var(--token-name); JavaScript reads them via the getToken()
+ * helper in src/styles/tokens.ts. Adding a dark theme later means
+ * overriding these values inside [data-theme="dark"] without touching
+ * any consuming file.
+ *
+ * Token values below mirror the literals that previously lived inline
+ * across the codebase, so swapping a literal for a token is a no-op.
+ */
+
+:root {
+  /* Surface backgrounds */
+  --bg-page: #f5f5f5;
+  --bg-surface: #ffffff;
+  --bg-surface-raised: #f8fafc;
+  --bg-surface-subtle: #fafafa;
+  --bg-surface-tinted: #f9fafb;
+  --bg-surface-faint: #fafbfc;
+  --bg-tint-navy: #dbe3ef;
+  --bg-hover: #f1f5f9;
+  --bg-active: #e2e8f0;
+  --bg-disabled: #f8fafc;
+  --bg-login: #f5f7fa;
+  --bg-overlay-light: rgba(255, 255, 255, 0.8);
+  --bg-overlay-tooltip: rgba(255, 255, 255, 0.95);
+  --bg-overlay-tooltip-soft: rgba(255, 255, 255, 0.9);
+  --bg-overlay-fade-98: rgba(255, 255, 255, 0.98);
+  --bg-overlay-fade-92: rgba(255, 255, 255, 0.92);
+  --bg-overlay-fade-85: rgba(255, 255, 255, 0.85);
+  --bg-overlay-fade-70: rgba(255, 255, 255, 0.7);
+  --bg-overlay-fade-55: rgba(255, 255, 255, 0.55);
+  --bg-overlay-fade-50: rgba(255, 255, 255, 0.5);
+  --bg-overlay-fade-30: rgba(255, 255, 255, 0.3);
+  --bg-overlay-fade-25: rgba(255, 255, 255, 0.25);
+  --bg-overlay-fade-12: rgba(255, 255, 255, 0.12);
+  --bg-overlay-modal: rgba(15, 23, 42, 0.55);
+
+  /* Text */
+  --text-base: #213547;
+  --text-primary: #1a1a1a;
+  --text-heading: #243269;
+  --text-h1: #1e3a5f;
+  --text-secondary: #475569;
+  --text-tertiary: #334155;
+  --text-deep: #1e293b;
+  --text-strong: #0f172a;
+  --text-form: #374151;
+  --text-form-strong: #1f2937;
+  --text-form-secondary: #4b5563;
+  --text-muted: #64748b;
+  --text-disabled: #94a3b8;
+  --text-slate-cool: #a0a8b4;
+  --text-gray: #9ca3af;
+  --text-gray-light: #e5e7eb;
+  --text-inverse: #ffffff;
+  --text-link: #243269;
+
+  /* Borders */
+  --border-default: #e2e8f0;
+  --border-subtle: #f1f5f9;
+  --border-strong: #cbd5e1;
+  --border-input: #d1d5db;
+  --border-focus: #10b981;
+  --border-focus-blue: #3b82f6;
+
+  /* Brand */
+  --brand-navy: #243269;
+  --brand-navy-dark: #1e2757;
+  --brand-navy-deep: #1a2451;
+  /*
+   * Use --brand-navy-text wherever HF navy is consumed as TEXT (h1, h2,
+   * link colors, badge labels). It mirrors --brand-navy in light mode
+   * but becomes white in dark mode so headings stay readable on a dark
+   * canvas. Button backgrounds and filled-shape colors should keep
+   * using --brand-navy directly so brand-identity holds.
+   */
+  --brand-navy-text: var(--brand-navy);
+  --brand-emerald: #019966;
+  --brand-emerald-dark: #017a52;
+  --brand-emerald-bright: #10b981;
+  --brand-emerald-bright-dark: #059669;
+
+  /* Brand alpha tints (used for hover backgrounds, focus rings, badges) */
+  --brand-navy-alpha-06: rgba(36, 50, 105, 0.06);
+  --brand-navy-alpha-08: rgba(36, 50, 105, 0.08);
+  --brand-navy-alpha-10: rgba(36, 50, 105, 0.1);
+  --brand-navy-alpha-15: rgba(36, 50, 105, 0.15);
+  --brand-navy-alpha-30: rgba(36, 50, 105, 0.3);
+  --brand-navy-alpha-35: rgba(36, 50, 105, 0.35);
+  --brand-navy-alpha-40: rgba(36, 50, 105, 0.4);
+  --brand-navy-alpha-45: rgba(36, 50, 105, 0.45);
+  --brand-navy-deep-2: #1a2550;
+  --brand-emerald-alpha-08: rgba(1, 153, 102, 0.08);
+  --brand-emerald-alpha-10: rgba(1, 153, 102, 0.1);
+  --brand-emerald-alpha-12: rgba(1, 153, 102, 0.12);
+  --brand-emerald-alpha-15: rgba(1, 153, 102, 0.15);
+  --brand-emerald-alpha-20: rgba(1, 153, 102, 0.2);
+  --brand-emerald-alpha-40: rgba(1, 153, 102, 0.4);
+  --brand-emerald-bright-alpha-10: rgba(16, 185, 129, 0.1);
+  --brand-emerald-bright-alpha-15: rgba(16, 185, 129, 0.15);
+  --brand-emerald-bright-alpha-20: rgba(16, 185, 129, 0.2);
+  --brand-emerald-bright-alpha-30: rgba(16, 185, 129, 0.3);
+  --brand-emerald-bright-alpha-40: rgba(16, 185, 129, 0.4);
+  --brand-emerald-bright-light: #34d399;
+  --brand-emerald-bright-alpha-focus: rgba(16, 185, 129, 0.1);
+  --border-focus-blue-alpha: rgba(59, 130, 246, 0.1);
+
+  /* Status (foreground + soft background) */
+  --status-success: #16a34a;
+  --status-success-strong: #047857;
+  --status-success-strong-2: #15803d;
+  --status-success-bg: #f0fdf4;
+  /*
+   * Success is a SEMANTIC status color and must stay green regardless of any
+   * per-location brand theme (src/utils/locationTheme.ts can recolor the
+   * --brand-emerald family). These literals are the same green that
+   * --brand-emerald-bright-alpha-10/20 resolve to in the default theme
+   * (#10b981 = rgb(16, 185, 129)), so existing locations are unchanged; the
+   * dark block already uses literal greens for the same reason.
+   */
+  --status-success-bg-soft: rgba(16, 185, 129, 0.1);
+  --status-success-border-soft: rgba(16, 185, 129, 0.2);
+
+  --status-error: #dc2626;
+  --status-error-strong: #b91c1c;
+  --status-error-bg: #fef2f2;
+  --status-error-bg-soft: rgba(239, 68, 68, 0.1);
+  --status-error-border-soft: rgba(239, 68, 68, 0.2);
+
+  --status-warning: #d97706;
+  --status-warning-strong: #b45309;
+  --status-warning-bg-soft: rgba(245, 158, 11, 0.1);
+  --status-warning-border-soft: rgba(245, 158, 11, 0.2);
+
+  --status-info: #2563eb;
+  --status-info-strong: #1d4ed8;
+  --status-info-bg: #eff6ff;
+
+  --status-neutral: #64748b;
+  --status-neutral-bg-soft: rgba(100, 116, 139, 0.1);
+  --status-neutral-border-soft: rgba(100, 116, 139, 0.2);
+  --status-neutral-alpha-30: rgba(100, 116, 139, 0.3);
+  --status-neutral-alpha-40: rgba(100, 116, 139, 0.4);
+  --status-neutral-alpha-45: rgba(100, 116, 139, 0.45);
+  --text-secondary-alpha-65: rgba(71, 85, 105, 0.65);
+  --slate-deep-alpha-16: rgba(15, 23, 42, 0.16);
+  --slate-deep-alpha-40: rgba(15, 23, 42, 0.4);
+
+  /* Status pastel backgrounds (used in interpretation modal callouts) */
+  --status-success-bg-pale: #dcfce7;
+  --status-success-bg-mint: #d1fae5;
+  --status-success-bg-deep: #065f46;
+  --status-success-bg-tint: #ecfdf5;
+  --status-success-bg-faint: #f7fdfb;
+  --status-info-bg-pale: #dbeafe;
+  --status-info-bg-pale-2: #f0f9ff;
+  --status-info-bg-mint: #f0fdf9;
+  --status-info-bg-indigo-pale: #e0e7ff;
+  --status-info-bg-indigo-pale-2: #c7d2fe;
+  --status-info-strong-indigo: #3730a3;
+  --status-info-border-pale: #bfdbfe;
+  --status-warning-bg-pale: #fef3c7;
+  --status-warning-bg-faint: #fffbeb;
+  --status-error-bg-pale: #fee2e2;
+  --status-accent-purple-pale: #faf5ff;
+  --status-accent-violet-pale: #f5f3ff;
+  --status-accent-pink-pale: #fdf2f8;
+  --status-accent-indigo-pale: #eef2ff;
+  --status-accent-mint-pale: #e6f7f1;
+  --status-accent-violet: #7c3aed;
+  --status-accent-violet-strong: #6d28d9;
+
+  /* Light status variants used in admin/user surfaces */
+  --status-success-light: #6ee7b7;
+  --status-success-bright: #bbf7d0;
+  --status-success-deepest: #015c3e;
+  --status-error-light: #f87171;
+  --status-error-lighter: #fca5a5;
+  --status-error-palest: #fecaca;
+  --status-warning-light: #fde68a;
+
+  /* Stone/warm gray family (used in admin email panel selection states) */
+  --text-stone: #78716c;
+  --stone-alpha-15: rgba(168, 162, 158, 0.15);
+
+  /* Near-black variant */
+  --text-near-black: #1a202c;
+  --text-mid-gray: #555;
+
+  /* Rating quintiles (interpretation modal) */
+  --rating-strong: #166534;
+  --rating-good: #1e40af;
+  --rating-average: #475569;
+  --rating-lagging: #92400e;
+  --rating-concerning: #991b1b;
+
+  /* Chart structural colors */
+  --chart-title: #243269;
+  --chart-legend-text: #374151;
+  --chart-axis: #64748b;
+  --chart-grid: rgba(226, 232, 240, 0.5);
+  --chart-radar-grid: #f1f5f9;
+  --chart-radar-angle: #e2e8f0;
+  --chart-tooltip-bg: rgba(255, 255, 255, 0.95);
+  --chart-tooltip-text: #1a1a1a;
+  --chart-tooltip-border: #e2e8f0;
+  --chart-point-border: #ffffff;
+
+  /* Chart geo palette */
+  --chart-geo-location: #2563eb;
+  --chart-geo-state: #10b981;
+  --chart-geo-state-2: #a855f7;
+  --chart-geo-state-3: #0891b2;
+  --chart-geo-state-4: #dc2626;
+  --chart-geo-us: #f59e0b;
+  --chart-benchmark: #6b7280;
+
+  /* Chart peer overlay palette (5 slots) */
+  --chart-peer-1: #8b5cf6;
+  --chart-peer-2: #ec4899;
+  --chart-peer-3: #06b6d4;
+  --chart-peer-4: #84cc16;
+  --chart-peer-5: #f97316;
+
+  /* Per-chart "+ Compare" palette (5 slots) */
+  --chart-comparison-1: #ef4444;
+  --chart-comparison-2: #4f46e5;
+  --chart-comparison-3: #eab308;
+  --chart-comparison-4: #e11d48;
+  --chart-comparison-5: #0d9488;
+
+  /* Map (CommuterFlowMap, location selector) */
+  --map-selected: #10b981;
+  --map-selected-stroke: #059669;
+  --map-no-data: #d1d5db;
+  --map-county-border: #9ca3af;
+  --map-county-border-hover: #374151;
+  --map-state-outline: #374151;
+  --map-out-of-state: #6b7280;
+
+  /* Shadows (alpha overlays on white surfaces) */
+  --shadow-card: rgba(0, 0, 0, 0.04);
+  --shadow-light: rgba(0, 0, 0, 0.05);
+  --shadow-card-hover: rgba(0, 0, 0, 0.08);
+  --shadow-medium: rgba(0, 0, 0, 0.1);
+  --shadow-modal: rgba(0, 0, 0, 0.12);
+  --shadow-modal-hover: rgba(0, 0, 0, 0.12);
+  --shadow-deeper: rgba(0, 0, 0, 0.15);
+  --shadow-darker: rgba(0, 0, 0, 0.18);
+  --shadow-strong: rgba(0, 0, 0, 0.2);
+  --shadow-stronger: rgba(0, 0, 0, 0.25);
+  --shadow-deepest: rgba(0, 0, 0, 0.4);
+  --shadow-overlay: rgba(0, 0, 0, 0.5);
+  --shadow-overlay-deep: rgba(0, 0, 0, 0.6);
+}
+
+/*
+ * Dark theme overrides. Activated by setting `data-theme="dark"` on
+ * <html>. Every consuming surface inherits the new values via the
+ * existing var(--token-name) references; no consumer needs to be
+ * touched to support dark mode.
+ *
+ * Design notes:
+ * - Surface base is a deep navy-slate (#0a0e1a) rather than pure black.
+ *   Pure black has no perceived depth; the slight blue cast keeps the
+ *   HF brand reading even in dark mode.
+ * - Brand navy (originally #243269) becomes a lighter navy (#5b6aab)
+ *   so navy-on-dark-surface remains legible. Hover goes brighter, not
+ *   darker, which feels natural in dark UIs.
+ * - Status pastels (originally near-white tints) flip to deep tinted
+ *   shades so badges still read as "soft" instead of harsh.
+ * - Chart palette stays in the same hue family but lighter/more
+ *   saturated for legibility on the dark canvas.
+ * - Shadows go to higher alpha because depth needs more contrast on
+ *   a dark surface to be visible.
+ */
+[data-theme="dark"] {
+  /*
+   * Surface backgrounds. Neutral dark gray (VS Code-ish) canvas with
+   * a step pattern: page is the deepest, cards lift, raised modals
+   * lift further. Decorative pillar gradients in light mode collapse
+   * to bg-page so the dashboard reads as one uniform dark canvas with
+   * cards as the only visual layering.
+   */
+  --bg-page: #1e1e1e;
+  --bg-surface: #2a2a2a;
+  --bg-surface-raised: #333333;
+  --bg-surface-subtle: #232323;
+  --bg-surface-tinted: #2a2a2a;
+  --bg-surface-faint: #1e1e1e;
+  --bg-tint-navy: #2d3142;
+  --bg-hover: #353535;
+  --bg-active: #404040;
+  --bg-disabled: #2a2a2a;
+  --bg-login: #1e1e1e;
+  --bg-overlay-light: rgba(10, 14, 26, 0.8);
+  --bg-overlay-tooltip: rgba(30, 41, 59, 0.95);
+  --bg-overlay-tooltip-soft: rgba(30, 41, 59, 0.9);
+  /*
+   * White-fade overlays still apply to navy-gradient surfaces (e.g.
+   * footer text). The footer gradient in dark mode is even darker, so
+   * white fades remain valid for legibility.
+   */
+  --bg-overlay-fade-98: rgba(255, 255, 255, 0.95);
+  --bg-overlay-fade-92: rgba(255, 255, 255, 0.88);
+  --bg-overlay-fade-85: rgba(255, 255, 255, 0.85);
+  --bg-overlay-fade-70: rgba(255, 255, 255, 0.7);
+  --bg-overlay-fade-55: rgba(255, 255, 255, 0.55);
+  --bg-overlay-fade-50: rgba(255, 255, 255, 0.5);
+  --bg-overlay-fade-30: rgba(255, 255, 255, 0.3);
+  --bg-overlay-fade-25: rgba(255, 255, 255, 0.25);
+  --bg-overlay-fade-12: rgba(255, 255, 255, 0.12);
+  --bg-overlay-modal: rgba(0, 0, 0, 0.7);
+
+  /* Text */
+  --text-base: #e2e8f0;
+  --text-primary: #f1f5f9;
+  --text-heading: #f1f5f9;
+  --text-h1: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #cbd5e1;
+  --text-deep: #f1f5f9;
+  --text-strong: #ffffff;
+  --text-form: #cbd5e1;
+  --text-form-strong: #f1f5f9;
+  --text-form-secondary: #94a3b8;
+  --text-muted: #94a3b8;
+  --text-disabled: #64748b;
+  --text-slate-cool: #64748b;
+  --text-gray: #6b7280;
+  --text-gray-light: #2a3344;
+  --text-inverse: #0f172a;
+  --text-link: #93c5fd;
+  --text-near-black: #f1f5f9;
+  --text-mid-gray: #94a3b8;
+
+  /* Borders */
+  --border-default: #2a3344;
+  --border-subtle: #1f2940;
+  --border-strong: #3f4a5f;
+  --border-input: #3f4a5f;
+  --border-focus: #34d399;
+  --border-focus-blue: #60a5fa;
+
+  /*
+   * Brand. The HF navy (#243269) is preserved as-is in dark mode:
+   * brand identity stays consistent across themes. Where the original
+   * navy is used as button/badge BACKGROUND, white-on-navy still reads
+   * fine on dark. Where it would be used as TEXT on a dark surface,
+   * consumers should use --text-heading (which is overridden below to
+   * light slate in dark mode) instead of --brand-navy.
+   */
+  --brand-navy: #243269;
+  --brand-navy-dark: #1e2757;
+  --brand-navy-deep: #1a2451;
+  --brand-navy-deep-2: #1a2550;
+  /*
+   * In dark mode, headings/text that referenced --brand-navy-text now
+   * resolve to a near-white slate so they read on the dark canvas. The
+   * raw --brand-navy stays at #243269 above so button/badge backgrounds
+   * keep brand color identity.
+   */
+  --brand-navy-text: #f1f5f9;
+  --brand-emerald: #10b981;
+  --brand-emerald-dark: #34d399;
+  --brand-emerald-bright: #34d399;
+  --brand-emerald-bright-dark: #6ee7b7;
+
+  /*
+   * Brand alpha tints. Same rgb base as light mode, slightly higher
+   * alpha so the tint is visible against the dark canvas.
+   */
+  --brand-navy-alpha-06: rgba(36, 50, 105, 0.18);
+  --brand-navy-alpha-08: rgba(36, 50, 105, 0.22);
+  --brand-navy-alpha-10: rgba(36, 50, 105, 0.25);
+  --brand-navy-alpha-15: rgba(36, 50, 105, 0.32);
+  --brand-navy-alpha-30: rgba(36, 50, 105, 0.5);
+  --brand-navy-alpha-35: rgba(36, 50, 105, 0.55);
+  --brand-navy-alpha-40: rgba(36, 50, 105, 0.6);
+  --brand-navy-alpha-45: rgba(36, 50, 105, 0.65);
+  --brand-emerald-alpha-08: rgba(52, 211, 153, 0.12);
+  --brand-emerald-alpha-10: rgba(52, 211, 153, 0.15);
+  --brand-emerald-alpha-12: rgba(52, 211, 153, 0.18);
+  --brand-emerald-alpha-15: rgba(52, 211, 153, 0.22);
+  --brand-emerald-alpha-20: rgba(52, 211, 153, 0.28);
+  --brand-emerald-alpha-40: rgba(52, 211, 153, 0.5);
+  --brand-emerald-bright-alpha-10: rgba(52, 211, 153, 0.15);
+  --brand-emerald-bright-alpha-15: rgba(52, 211, 153, 0.22);
+  --brand-emerald-bright-alpha-20: rgba(52, 211, 153, 0.28);
+  --brand-emerald-bright-alpha-30: rgba(52, 211, 153, 0.4);
+  --brand-emerald-bright-alpha-40: rgba(52, 211, 153, 0.55);
+  --brand-emerald-bright-light: #6ee7b7;
+  --brand-emerald-bright-alpha-focus: rgba(52, 211, 153, 0.2);
+  --border-focus-blue-alpha: rgba(96, 165, 250, 0.2);
+
+  /* Status. Foreground brightens; soft backgrounds become deep tints. */
+  --status-success: #22c55e;
+  --status-success-strong: #16a34a;
+  --status-success-strong-2: #22c55e;
+  --status-success-bg: #052e16;
+  --status-success-bg-soft: rgba(52, 211, 153, 0.15);
+  --status-success-border-soft: rgba(52, 211, 153, 0.3);
+
+  --status-error: #f87171;
+  --status-error-strong: #ef4444;
+  --status-error-bg: #2a1010;
+  --status-error-bg-soft: rgba(248, 113, 113, 0.15);
+  --status-error-border-soft: rgba(248, 113, 113, 0.3);
+
+  --status-warning: #fbbf24;
+  --status-warning-strong: #f59e0b;
+  --status-warning-bg-soft: rgba(251, 191, 36, 0.15);
+  --status-warning-border-soft: rgba(251, 191, 36, 0.3);
+
+  --status-info: #60a5fa;
+  --status-info-strong: #3b82f6;
+  --status-info-bg: #0c1929;
+
+  --status-neutral: #94a3b8;
+  --status-neutral-bg-soft: rgba(148, 163, 184, 0.15);
+  --status-neutral-border-soft: rgba(148, 163, 184, 0.3);
+  --status-neutral-alpha-30: rgba(148, 163, 184, 0.3);
+  --status-neutral-alpha-40: rgba(148, 163, 184, 0.4);
+  --status-neutral-alpha-45: rgba(148, 163, 184, 0.45);
+  --text-secondary-alpha-65: rgba(203, 213, 225, 0.65);
+  --slate-deep-alpha-16: rgba(0, 0, 0, 0.4);
+  --slate-deep-alpha-40: rgba(0, 0, 0, 0.6);
+
+  /*
+   * Status pastel backgrounds. In light mode these are near-white
+   * tints (e.g. #dcfce7 mint). In dark mode they flip to deep tints
+   * so a "soft success" badge reads as a darker patch of green
+   * instead of a glaring near-white block.
+   */
+  --status-success-bg-pale: #14532d;
+  --status-success-bg-mint: #0f3a23;
+  --status-success-bg-deep: #6ee7b7;
+  --status-success-bg-tint: #14532d;
+  --status-success-bg-faint: #0a2e18;
+  --status-info-bg-pale: #1e3a5f;
+  --status-info-bg-pale-2: #0c1929;
+  --status-info-bg-mint: #0a2e18;
+  --status-info-bg-indigo-pale: #1e2a4d;
+  --status-info-bg-indigo-pale-2: #2a3a6b;
+  --status-info-strong-indigo: #a5b4fc;
+  --status-info-border-pale: #2a3a6b;
+  --status-warning-bg-pale: #422006;
+  --status-warning-bg-faint: #1a0f04;
+  --status-error-bg-pale: #2a1010;
+  --status-accent-purple-pale: #2a1845;
+  --status-accent-violet-pale: #2a1845;
+  --status-accent-pink-pale: #3a1830;
+  --status-accent-indigo-pale: #1e2a4d;
+  --status-accent-mint-pale: #0a2e18;
+  --status-accent-violet: #a78bfa;
+  --status-accent-violet-strong: #c4b5fd;
+
+  /* Light status variants (used for borders, badge accents) */
+  --status-success-light: #34d399;
+  --status-success-bright: #6ee7b7;
+  --status-success-deepest: #6ee7b7;
+  --status-error-light: #f87171;
+  --status-error-lighter: #fca5a5;
+  --status-error-palest: #7f1d1d;
+  --status-warning-light: #fbbf24;
+
+  /* Stone */
+  --text-stone: #a8a29e;
+  --stone-alpha-15: rgba(168, 162, 158, 0.18);
+
+  /*
+   * Rating quintiles. Original deep colors (#166534, #1e40af, etc.)
+   * disappear on dark; brightened to lighter family equivalents that
+   * still read as "green / blue / amber / red" but with more luminance.
+   */
+  --rating-strong: #4ade80;
+  --rating-good: #60a5fa;
+  --rating-average: #cbd5e1;
+  --rating-lagging: #fbbf24;
+  --rating-concerning: #f87171;
+
+  /* Chart structural colors */
+  --chart-title: #f1f5f9;
+  --chart-legend-text: #f1f5f9;
+  --chart-axis: #cbd5e1;
+  --chart-grid: rgba(148, 163, 184, 0.25);
+  --chart-radar-grid: #2a3344;
+  --chart-radar-angle: #3f4a5f;
+  /*
+   * Tooltip palette matches the neutral surface stack: tooltip is a
+   * lifted variant of bg-surface (#2a2a2a) at near-opaque alpha, with
+   * a one-step lighter border. Pure-slate values from the previous
+   * iteration clashed with the neutral gray canvas.
+   */
+  --chart-tooltip-bg: rgba(51, 51, 51, 0.97);
+  --chart-tooltip-text: #f1f5f9;
+  --chart-tooltip-border: #4a4a4a;
+  /*
+   * Point border separates dataset dots from the chart canvas. In
+   * light mode this is white; in dark mode it must match the chart
+   * card background (--bg-surface, #2a2a2a) so points retain a clean
+   * outline without a glaring ring. Earlier value (#131826) had a
+   * blue cast that produced a visible halo against the neutral gray
+   * surface.
+   */
+  --chart-point-border: #2a2a2a;
+
+  /*
+   * Chart palettes. Hue family preserved so users still recognize
+   * "the green is state, the blue is location" - colors lifted to
+   * lighter saturations for legibility on dark canvas.
+   */
+  --chart-geo-location: #60a5fa;
+  --chart-geo-state: #34d399;
+  --chart-geo-state-2: #c4b5fd;
+  --chart-geo-state-3: #67e8f9;
+  --chart-geo-state-4: #f87171;
+  --chart-geo-us: #fbbf24;
+  --chart-benchmark: #94a3b8;
+
+  --chart-peer-1: #a78bfa;
+  --chart-peer-2: #f9a8d4;
+  --chart-peer-3: #67e8f9;
+  --chart-peer-4: #bef264;
+  --chart-peer-5: #fdba74;
+
+  --chart-comparison-1: #fca5a5;
+  --chart-comparison-2: #818cf8;
+  --chart-comparison-3: #fde047;
+  --chart-comparison-4: #fda4af;
+  --chart-comparison-5: #5eead4;
+
+  /* Map (CommuterFlowMap, location selector) */
+  --map-selected: #34d399;
+  --map-selected-stroke: #6ee7b7;
+  --map-no-data: #2a3344;
+  --map-county-border: #475569;
+  --map-county-border-hover: #94a3b8;
+  --map-state-outline: #475569;
+  --map-out-of-state: #94a3b8;
+
+  /*
+   * Shadows. Dark surfaces lose perceived depth quickly; bumping
+   * shadow alpha 5x compared to light mode keeps cards / modals
+   * looking elevated rather than flat.
+   */
+  --shadow-card: rgba(0, 0, 0, 0.2);
+  --shadow-light: rgba(0, 0, 0, 0.25);
+  --shadow-card-hover: rgba(0, 0, 0, 0.3);
+  --shadow-medium: rgba(0, 0, 0, 0.35);
+  --shadow-modal: rgba(0, 0, 0, 0.45);
+  --shadow-modal-hover: rgba(0, 0, 0, 0.45);
+  --shadow-deeper: rgba(0, 0, 0, 0.5);
+  --shadow-darker: rgba(0, 0, 0, 0.55);
+  --shadow-strong: rgba(0, 0, 0, 0.6);
+  --shadow-stronger: rgba(0, 0, 0, 0.65);
+  --shadow-deepest: rgba(0, 0, 0, 0.7);
+  --shadow-overlay: rgba(0, 0, 0, 0.75);
+  --shadow-overlay-deep: rgba(0, 0, 0, 0.85);
+}
+
