@@ -26,6 +26,12 @@ const EFFICIENCY_OPTIONS = [
   { value: 'Optimistic' as const, label: 'Optimistic' },
 ]
 
+const WATER_OPTIONS = [
+  { value: 'Conservative' as const, label: 'Conservative' },
+  { value: 'Optimistic' as const, label: 'Optimistic' },
+  { value: 'Closed-Loop' as const, label: 'Closed-Loop' },
+]
+
 const FACILITY_OPTIONS = [
   { value: 'Hyperscale (cloud/AI operator)' as FacilityType, label: 'Hyperscale (cloud/AI)' },
   { value: 'Colocation (leased/wholesale)' as FacilityType, label: 'Colocation (leased)' },
@@ -45,8 +51,7 @@ export function Estimator({ row, countyName, benchmark }: Props) {
     presetTier: Object.keys(TIER_PRESETS)[0],
     customMw: null,
     energyEfficiency: 'Default',
-    waterEfficiency: 'Default',
-    closedLoop: false,
+    waterEfficiency: 'Conservative',
     facilityType: 'Hyperscale (cloud/AI operator)',
     costBasis: 'Shell + core',
     millageRate: 20,
@@ -63,8 +68,16 @@ export function Estimator({ row, countyName, benchmark }: Props) {
   const econItems: { label: string; number: string; note: string }[] = [
     { label: 'Shell + core cost', number: fmtDollars(e.constructionCost), note: 'at $11.3M per MW' },
     { label: 'With AI fit-out', number: fmtDollars(e.aiTotalCost), note: 'at $36.3M per MW' },
-    { label: 'Permanent jobs', number: round0(e.permanentJobs), note: 'at 1.5 jobs/MW (hyperscale automation)' },
-    { label: 'Construction jobs', number: round0(e.constructionJobs), note: 'at 10 workers/MW (peak build)' },
+    {
+      label: 'Permanent jobs',
+      number: round0(e.permanentJobs),
+      note: "fixed ~150 on-site staff - doesn't scale with MW (Bahar & Wright 2026)",
+    },
+    {
+      label: 'Construction jobs',
+      number: round0(e.constructionJobs),
+      note: '500 at 50 MW to 3,000 at 500 MW (Meta 1GW Alberta anchor)',
+    },
     {
       label: 'Indirect jobs',
       number: round0(e.indirectJobs),
@@ -100,7 +113,7 @@ export function Estimator({ row, countyName, benchmark }: Props) {
         </Field>
       </SegmentedControlRow>
 
-      <SegmentedControlRow cols={2}>
+      <SegmentedControlRow cols={3}>
         <Field label="Energy efficiency scenario">
           <Segmented
             value={inputs.energyEfficiency}
@@ -111,26 +124,12 @@ export function Estimator({ row, countyName, benchmark }: Props) {
         <Field label="Water efficiency scenario">
           <Segmented
             value={inputs.waterEfficiency}
-            options={EFFICIENCY_OPTIONS}
+            options={WATER_OPTIONS}
             onChange={(v) => set('waterEfficiency', v)}
-            disabled={inputs.closedLoop}
           />
         </Field>
-      </SegmentedControlRow>
-
-      <SegmentedControlRow cols={2}>
         <Field label="Facility type">
           <Segmented value={inputs.facilityType} options={FACILITY_OPTIONS} onChange={(v) => set('facilityType', v)} />
-        </Field>
-        <Field label="Water cooling" hint="Closed-loop overrides to WUE 0.0">
-          <label className="dc-checkbox">
-            <input
-              type="checkbox"
-              checked={inputs.closedLoop}
-              onChange={(ev) => set('closedLoop', ev.target.checked)}
-            />
-            Closed-loop system (no evaporative water use)
-          </label>
         </Field>
       </SegmentedControlRow>
       </div>
@@ -212,8 +211,13 @@ export function Estimator({ row, countyName, benchmark }: Props) {
         <div className="est-caveat">
           Nameplate capacity is theoretical maximum generation; available headroom depends on existing load,
           transmission constraints, and grid operator scheduling. A single datacenter facility creates modest permanent
-          employment: hyperscale automation limits on-site staff to roughly 1.5 jobs per MW. Ecosystem employment
-          concentrates in hyperscale clusters over time, not in a single facility's direct hire (Brookings, 2026).
+          employment: on-site operational staffing is modeled as a fixed ~150 people per facility (observed range
+          50-200), since data centers are highly automated and staffing doesn't scale with size (Bahar &amp; Wright,
+          2026). Peak construction employment scales from 500 jobs at 50 MW to 3,000 jobs at 500 MW, anchored to
+          Meta's disclosed ~3,000 peak construction jobs for its 1GW Alberta AI campus, multi-gigawatt megacampuses
+          like Meta's 5GW Richland Parish expansion (7,500+ peak construction jobs) sit at a different negotiating
+          scale entirely and aren't modeled here. Ecosystem employment concentrates in hyperscale clusters over time,
+          not in a single facility's direct hire (Brookings, 2026).
         </div>
       </div>
 

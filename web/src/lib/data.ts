@@ -171,11 +171,25 @@ export const INFO_SECTOR_COPY: Record<FacilityType, InfoSectorCopy> = {
 
 // Efficiency + economic constants
 export const PUE_MAP: Record<string, number> = { Conservative: 1.56, Default: 1.30, Optimistic: 1.09 }
-export const WUE_MAP: Record<string, number> = { Conservative: 1.90, Default: 1.80, Optimistic: 0.15 }
+// Closed-Loop floors at 0.02 L/kWh, not 0.0 - real makeup water needs (evaporation
+// losses, blowdown, refill) persist even in closed-loop systems.
+export const WUE_MAP: Record<string, number> = { Conservative: 1.80, Optimistic: 0.15, 'Closed-Loop': 0.02 }
 
 export const HOURS_PER_YEAR = 8760
 export const BUILD_PER_MW = 11_300_000
 export const FITOUT_PER_MW = 25_000_000
-export const PERM_PER_MW = 1.5
-export const CONST_PER_MW = 10.0
+
+// Permanent on-site staffing - Bahar & Wright (2026): automation decouples staffing
+// from facility size, so headcount is fixed per facility (observed range 50-200) rather
+// than scaling with MW.
+export const PERMANENT_JOBS_FIXED = 150
+
+// Peak construction jobs - linear interpolation from 500 jobs at 50 MW to 3,000 jobs
+// at 500 MW, clamped at both ends. The 3,000 upper bound is anchored to Meta's disclosed
+// ~3,000 peak construction jobs for its 1GW Alberta AI campus.
+export const CONST_JOBS_MW_LOW = 50
+export const CONST_JOBS_MW_HIGH = 500
+export const CONST_JOBS_AT_LOW = 500
+export const CONST_JOBS_AT_HIGH = 3_000
+
 export const TAX_WINDOW_YEARS = 10

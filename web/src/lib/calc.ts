@@ -3,14 +3,17 @@
 import {
   BROADBAND_MAP,
   BUILD_PER_MW,
-  CONST_PER_MW,
+  CONST_JOBS_AT_HIGH,
+  CONST_JOBS_AT_LOW,
+  CONST_JOBS_MW_HIGH,
+  CONST_JOBS_MW_LOW,
   FITOUT_PER_MW,
   HOURS_PER_YEAR,
   INCENTIVE_NORM_MAP,
   INDIRECT_MULT_MAP,
   INFO_SECTOR_COPY,
   LAND_MAP,
-  PERM_PER_MW,
+  PERMANENT_JOBS_FIXED,
   PUE_MAP,
   TAX_WINDOW_YEARS,
   TIER_PRESETS,
@@ -82,6 +85,13 @@ export function mwToTierKey(mw: number): TierKey {
   return 'hyperscale'
 }
 
+export function constructionJobsFor(mw: number): number {
+  if (mw <= CONST_JOBS_MW_LOW) return CONST_JOBS_AT_LOW
+  if (mw >= CONST_JOBS_MW_HIGH) return CONST_JOBS_AT_HIGH
+  const frac = (mw - CONST_JOBS_MW_LOW) / (CONST_JOBS_MW_HIGH - CONST_JOBS_MW_LOW)
+  return CONST_JOBS_AT_LOW + frac * (CONST_JOBS_AT_HIGH - CONST_JOBS_AT_LOW)
+}
+
 export function fmtDollars(n: number): string {
   if (n >= 1_000_000_000) return `$${(n / 1_000_000_000).toFixed(2)}B`
   return `$${(n / 1_000_000).toFixed(0)}M`
@@ -107,8 +117,7 @@ export interface EstimatorInputs {
   presetTier: string
   customMw: number | null
   energyEfficiency: 'Conservative' | 'Default' | 'Optimistic'
-  waterEfficiency: 'Conservative' | 'Default' | 'Optimistic'
-  closedLoop: boolean
+  waterEfficiency: 'Conservative' | 'Optimistic' | 'Closed-Loop'
   facilityType: FacilityType
   costBasis: 'Shell + core' | 'Shell + core + AI fit-out'
   millageRate: number
@@ -164,7 +173,7 @@ export function computeEstimate(
   const tierKey = mwToTierKey(itLoadMw)
 
   const pue = PUE_MAP[inputs.energyEfficiency]
-  const wue = inputs.closedLoop ? 0.0 : WUE_MAP[inputs.waterEfficiency]
+  const wue = WUE_MAP[inputs.waterEfficiency]
 
   const indirectMult = INDIRECT_MULT_MAP[inputs.facilityType]
 
@@ -206,8 +215,8 @@ export function computeEstimate(
   // Economics
   const constructionCost = itLoadMw * BUILD_PER_MW
   const aiTotalCost = itLoadMw * (BUILD_PER_MW + FITOUT_PER_MW)
-  const permanentJobs = itLoadMw * PERM_PER_MW
-  const constructionJobs = itLoadMw * CONST_PER_MW
+  const permanentJobs = PERMANENT_JOBS_FIXED
+  const constructionJobs = constructionJobsFor(itLoadMw)
   const indirectJobs = permanentJobs * indirectMult
   const infoCopy = INFO_SECTOR_COPY[inputs.facilityType]
 
