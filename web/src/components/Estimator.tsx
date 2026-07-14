@@ -113,7 +113,7 @@ export function Estimator({ row, countyName, benchmark }: Props) {
         </Field>
       </SegmentedControlRow>
 
-      <SegmentedControlRow cols={3}>
+      <SegmentedControlRow cols={2}>
         <Field label="Energy efficiency scenario">
           <Segmented
             value={inputs.energyEfficiency}
@@ -128,6 +128,9 @@ export function Estimator({ row, countyName, benchmark }: Props) {
             onChange={(v) => set('waterEfficiency', v)}
           />
         </Field>
+      </SegmentedControlRow>
+
+      <SegmentedControlRow cols={1}>
         <Field label="Facility type">
           <Segmented value={inputs.facilityType} options={FACILITY_OPTIONS} onChange={(v) => set('facilityType', v)} />
         </Field>
