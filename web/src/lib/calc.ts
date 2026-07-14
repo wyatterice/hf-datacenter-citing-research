@@ -120,6 +120,8 @@ export interface EstimatorInputs {
   waterEfficiency: 'Conservative' | 'Optimistic' | 'Closed-Loop'
   facilityType: FacilityType
   costBasis: 'Shell + core' | 'Shell + core + AI fit-out'
+  assessedValueMode: 'estimate' | 'direct'
+  assessedValueDirect: number | null
   millageRate: number
   assessmentRatio: number
   abatementPct: number
@@ -222,7 +224,10 @@ export function computeEstimate(
 
   // Tax
   const selectedTotalCost = inputs.costBasis === 'Shell + core' ? constructionCost : aiTotalCost
-  const assessedValue = selectedTotalCost * (inputs.assessmentRatio / 100)
+  const assessedValue =
+    inputs.assessedValueMode === 'direct'
+      ? inputs.assessedValueDirect ?? 0
+      : selectedTotalCost * (inputs.assessmentRatio / 100)
   const annualTaxFull = assessedValue * (inputs.millageRate / 1000)
   const annualTaxAbated = annualTaxFull * (1 - inputs.abatementPct / 100)
   const abatedYearsInWindow = Math.min(inputs.abatementYears, TAX_WINDOW_YEARS)

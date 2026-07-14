@@ -42,6 +42,11 @@ const COST_BASIS_OPTIONS = [
   { value: 'Shell + core + AI fit-out' as const, label: 'Shell + core + AI fit-out' },
 ]
 
+const ASSESSED_VALUE_MODE_OPTIONS = [
+  { value: 'estimate' as const, label: 'Estimate from construction cost' },
+  { value: 'direct' as const, label: 'Enter assessed value directly' },
+]
+
 function round0(n: number): string {
   return Math.round(n).toLocaleString('en-US')
 }
@@ -54,6 +59,8 @@ export function Estimator({ row, countyName, benchmark }: Props) {
     waterEfficiency: 'Conservative',
     facilityType: 'Hyperscale (cloud/AI operator)',
     costBasis: 'Shell + core',
+    assessedValueMode: 'estimate',
+    assessedValueDirect: null,
     millageRate: 20,
     assessmentRatio: 100,
     abatementPct: 0,
@@ -232,6 +239,16 @@ export function Estimator({ row, countyName, benchmark }: Props) {
 
         <div className="dc-panel">
         <SegmentedControlRow cols={1}>
+          <Field label="Assessed value source">
+            <Segmented
+              value={inputs.assessedValueMode}
+              options={ASSESSED_VALUE_MODE_OPTIONS}
+              onChange={(v) => set('assessedValueMode', v)}
+            />
+          </Field>
+        </SegmentedControlRow>
+
+        <SegmentedControlRow cols={1}>
           <Field label="Cost basis for assessed value">
             <Segmented value={inputs.costBasis} options={COST_BASIS_OPTIONS} onChange={(v) => set('costBasis', v)} />
           </Field>
@@ -241,15 +258,31 @@ export function Estimator({ row, countyName, benchmark }: Props) {
           <Field label="Millage rate (per $1,000)">
             <NumberField value={inputs.millageRate} onChange={(v) => set('millageRate', v ?? 0)} min={0} step={0.5} />
           </Field>
-          <Field label="Assessment ratio (%)">
-            <NumberField
-              value={inputs.assessmentRatio}
-              onChange={(v) => set('assessmentRatio', v ?? 1)}
-              min={1}
-              max={100}
-              step={1}
-            />
-          </Field>
+          {inputs.assessedValueMode === 'direct' ? (
+            <Field
+              label="Assessed value ($)"
+              hint="Use this if you have an actual assessor's valuation or a negotiated deal term, rather than estimating from construction cost."
+            >
+              <NumberField
+                value={inputs.assessedValueDirect}
+                onChange={(v) => set('assessedValueDirect', v)}
+                min={0}
+                step={100_000}
+                allowEmpty
+                placeholder="e.g. 250000000"
+              />
+            </Field>
+          ) : (
+            <Field label="Assessment ratio (%)">
+              <NumberField
+                value={inputs.assessmentRatio}
+                onChange={(v) => set('assessmentRatio', v ?? 1)}
+                min={1}
+                max={100}
+                step={1}
+              />
+            </Field>
+          )}
           <Field label="Abatement (%)">
             <SliderField value={inputs.abatementPct} onChange={(v) => set('abatementPct', v)} min={0} max={100} suffix="%" />
           </Field>
