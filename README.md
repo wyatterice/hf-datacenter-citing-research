@@ -81,6 +81,12 @@ npm run dev          # http://localhost:5173
 
 `npm run build` outputs a static bundle to `web/dist/`. Re-run `npm run build:data` whenever `county_scores.csv` changes.
 
+### Deployment
+
+The React front-end deploys to GitHub Pages via `.github/workflows/deploy-pages.yml`. On every push to `main` it builds `web/` and publishes `web/dist` to `https://<owner>.github.io/hf-datacenter-citing-research/`. The build regenerates `scores.json` from `Model/county_scores.csv`, so the published data always tracks the source CSV.
+
+One-time setup by the repo owner: Settings > Pages > Source = "GitHub Actions". The production build uses a `/hf-datacenter-citing-research/` base path (set in `web/vite.config.ts`) to match the Pages project subpath; local dev is unaffected.
+
 ## Known issues / open items
 
 - Virginia independent cities (FIPS 51500+) create duplicate county names in some dropdowns — partial fix in place (FIPS-disambiguated display names), full fix would filter them from `master_join.py`
