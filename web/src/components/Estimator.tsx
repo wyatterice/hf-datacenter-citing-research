@@ -157,10 +157,6 @@ export function Estimator({ row, countyName, benchmark }: Props) {
             <div className="impact-number">{round0(e.gridDrawMw)}</div>
             <div className="impact-unit">MW grid draw (IT load x PUE {e.pue})</div>
             <div className="impact-context">{e.capacityNote}</div>
-            <div className="impact-ask">
-              Require operator to fund grid improvements (substation upgrades, dedicated feeders, or new generation) as
-              a condition of the development agreement.
-            </div>
           </div>
           <div className="chart-card dc-card">
             <div className="card-header">Water demand</div>
@@ -171,26 +167,17 @@ export function Estimator({ row, countyName, benchmark }: Props) {
             <div className="impact-sub">
               {fmtGallonsDaily(e.dailyGallons)}, large facilities can reach 5M gallons/day
             </div>
-            <div className="impact-ask">
-              Negotiate water recycling requirements, closed-loop cooling standards, and annual usage caps into the
-              permit or development agreement.
-            </div>
           </div>
           <div className="chart-card dc-card">
             <div className="card-header">Connectivity demand</div>
             <div className="impact-number impact-number-sm">{e.bbRange}</div>
             <div className="impact-unit">estimated connectivity requirement</div>
             <div className="impact-context">{e.bbNote}</div>
-            <div className="impact-ask">{e.bbAsk}</div>
           </div>
           <div className="chart-card dc-card">
             <div className="card-header">Land footprint</div>
             <div className="impact-number impact-number-sm">{e.landRange}</div>
             <div className="impact-unit">estimated site footprint</div>
-            <div className="impact-ask">
-              Site selection terms, land use standards, and greenfield development commitments are all reasonable asks
-              in a development agreement.
-            </div>
           </div>
         </div>
       </div>

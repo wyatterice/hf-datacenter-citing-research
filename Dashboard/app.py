@@ -517,15 +517,10 @@ with est_c3:
 with est_c4:
     water_efficiency = st.radio(
         "Water efficiency scenario",
-        ["Conservative", "Default", "Optimistic"],
-        index=1,
+        ["Conservative", "Optimistic", "Closed-Loop"],
+        index=0,
         horizontal=True,
-        key="est_water_efficiency",
-        disabled=st.session_state.get("est_closed_loop", False)
-    )
-    closed_loop = st.checkbox(
-        "Closed-loop system (no evaporative water use — WUE = 0.0)",
-        key="est_closed_loop"
+        key="est_water_efficiency"
     )
 
 with est_c5:
@@ -551,16 +546,35 @@ tier_key = mw_to_tier_key(it_load_mw)
 
 # — Efficiency constants —
 PUE_MAP = {"Conservative": 1.56, "Default": 1.30, "Optimistic": 1.09}
-WUE_MAP = {"Conservative": 1.90, "Default": 1.80, "Optimistic": 0.15}
+# Closed-loop floors at 0.02 L/kWh, not 0.0 — real makeup water needs (evaporation
+# losses, blowdown, refill) persist even in closed-loop systems.
+WUE_MAP = {"Conservative": 1.80, "Optimistic": 0.15, "Closed-Loop": 0.02}
 
 pue = PUE_MAP[energy_efficiency]
-wue = 0.0 if closed_loop else WUE_MAP[water_efficiency]
+wue = WUE_MAP[water_efficiency]
 
 HOURS_PER_YEAR  = 8_760
 BUILD_PER_MW    = 11_300_000
 FITOUT_PER_MW   = 25_000_000
-PERM_PER_MW     = 1.5
-CONST_PER_MW    = 10.0
+
+# Permanent on-site staffing — Bahar & Wright (2026): automation decouples staffing
+# from facility size, so headcount is fixed per facility (observed range 50-200) rather
+# than scaling with MW.
+PERMANENT_JOBS_FIXED = 150
+
+# Peak construction jobs — linear interpolation from 500 jobs at 50 MW to 3,000 jobs
+# at 500 MW, clamped at both ends. The 3,000 upper bound is anchored to Meta's disclosed
+# ~3,000 peak construction jobs for its 1GW Alberta AI campus.
+CONST_JOBS_MW_LOW,   CONST_JOBS_MW_HIGH   = 50, 500
+CONST_JOBS_AT_LOW,   CONST_JOBS_AT_HIGH   = 500, 3_000
+
+def construction_jobs_for(mw):
+    if mw <= CONST_JOBS_MW_LOW:
+        return float(CONST_JOBS_AT_LOW)
+    if mw >= CONST_JOBS_MW_HIGH:
+        return float(CONST_JOBS_AT_HIGH)
+    frac = (mw - CONST_JOBS_MW_LOW) / (CONST_JOBS_MW_HIGH - CONST_JOBS_MW_LOW)
+    return CONST_JOBS_AT_LOW + frac * (CONST_JOBS_AT_HIGH - CONST_JOBS_AT_LOW)
 
 # Indirect jobs multiplier — Bahar & Wright (2026) synthetic control study
 INDIRECT_MULT_MAP = {
@@ -625,8 +639,8 @@ def fmt_dollars(n):
 
 construction_cost = it_load_mw * BUILD_PER_MW
 ai_total_cost     = it_load_mw * (BUILD_PER_MW + FITOUT_PER_MW)
-permanent_jobs    = it_load_mw * PERM_PER_MW
-construction_jobs = it_load_mw * CONST_PER_MW
+permanent_jobs    = float(PERMANENT_JOBS_FIXED)
+construction_jobs = construction_jobs_for(it_load_mw)
 indirect_jobs     = permanent_jobs * indirect_mult
 
 # — Infrastructure demand cards —
@@ -693,8 +707,8 @@ ecols = st.columns(5)
 econ_items = [
     ("Shell + core cost",  fmt_dollars(construction_cost), "at $11.3M per MW"),
     ("With AI fit-out",    fmt_dollars(ai_total_cost),     "at $36.3M per MW"),
-    ("Permanent jobs",     f"{permanent_jobs:,.0f}",        "at 1.5 jobs/MW (hyperscale automation)"),
-    ("Construction jobs",  f"{construction_jobs:,.0f}",     "at 10 workers/MW (peak build)"),
+    ("Permanent jobs",     f"{permanent_jobs:,.0f}",        "fixed ~150 on-site staff — doesn't scale with MW (Bahar & Wright 2026)"),
+    ("Construction jobs",  f"{construction_jobs:,.0f}",     "500 at 50 MW → 3,000 at 500 MW (Meta 1GW Alberta anchor)"),
     ("Indirect jobs",      f"{indirect_jobs:,.0f}",         f"{indirect_mult:g}× permanent jobs ({facility_type_label}, Bahar & Wright 2026)"),
 ]
 
@@ -755,9 +769,14 @@ st.markdown("""
 <div class="est-caveat">
     ⚠ Nameplate capacity is theoretical maximum generation; available headroom depends on existing load,
     transmission constraints, and grid operator scheduling.
-    A single datacenter facility creates modest permanent employment — hyperscale automation limits on-site staff
-    to roughly 1.5 jobs per MW. Ecosystem employment concentrates in hyperscale clusters over time, not in a
-    single facility's direct hire (Brookings, 2026).
+    A single datacenter facility creates modest permanent employment — on-site operational staffing is modeled
+    as a fixed ~150 people per facility (observed range 50–200), since data centers are highly automated and
+    staffing doesn't scale with size (Bahar & Wright, 2026). Peak construction employment scales from 500 jobs
+    at 50 MW to 3,000 jobs at 500 MW, anchored to Meta's disclosed ~3,000 peak construction jobs for its 1GW
+    Alberta AI campus — multi-gigawatt megacampuses like Meta's 5GW Richland Parish expansion (7,500+ peak
+    construction jobs) sit at a different negotiating scale entirely and aren't modeled here. Ecosystem
+    employment concentrates in hyperscale clusters over time, not in a single facility's direct hire
+    (Brookings, 2026).
 </div>
 """, unsafe_allow_html=True)
 
